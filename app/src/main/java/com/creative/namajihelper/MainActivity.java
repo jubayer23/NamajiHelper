@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.creative.namajihelper.appdata.AppConstant;
 import com.creative.namajihelper.appdata.AppController;
 import com.creative.namajihelper.userview.LoginActivity;
 import com.creative.namajihelper.userview.RegisterNamaji;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-        if (AppController.getInstance().getPrefManger().getLoginType().equalsIgnoreCase("namaji")) {
+        if (AppController.getInstance().getPrefManger().getLoginType().equalsIgnoreCase(AppConstant.LOGIN_TYPE_NAMAJI)) {
             tv_dummy.setText("Welcome Namaji");
 
         } else {

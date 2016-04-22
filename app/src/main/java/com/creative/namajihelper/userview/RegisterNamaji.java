@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -188,10 +189,11 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
                 int id = response.getInt("user_id");
 
 
+
                 Namaji namaji = new Namaji(id, namajiName.replaceAll("%20", " "), mobileNo);
 
-                AppController.getInstance().getPrefManger().setNamajiObject(namaji);
 
+                AppController.getInstance().getPrefManger().setNamajiObject(namaji);
 
                 gotoFrontPage();
 
@@ -222,6 +224,8 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
 
     public void gotoFrontPage() {
 
+
+        AppController.getInstance().getPrefManger().setLoginType(AppConstant.LOGIN_TYPE_NAMAJI);
 
         Intent intent = new Intent(RegisterNamaji.this, MainActivity.class);
 

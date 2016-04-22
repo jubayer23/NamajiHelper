@@ -17,6 +17,10 @@ public class AppConstant {
 
     public static final int REQUEST_CHECK_SETTINGS = 100;
 
+    public static final String LOGIN_TYPE_NAMAJI = "namaji";
+
+    public static final String LOGIN_TYPE_MOSQUE = "mosque";
+
 
     public static String getUserRegUrl(String username, String email, String password) {
         return BaseUrl + "register.php?"
@@ -54,9 +58,9 @@ public class AppConstant {
 
     public static String getNamajiRegisterUrl(String namajiName, String mobileNo, String password) {
         return BaseUrl + "namaji_register.php?"
-                + "mosque_name=" + namajiName
-                + "&mosque_type=" + mobileNo
-                + "&mobile_no=" + password;
+                + "namaji_name=" + namajiName
+                + "&mobile_no=" + mobileNo
+                + "&password=" + password;
 
     }
 
