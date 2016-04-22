@@ -14,7 +14,7 @@ import com.creative.namajihelper.userview.RegisterNamaji;
 public class MainActivity extends AppCompatActivity {
 
     TextView tv_dummy;
-    Button logout;
+    Button logout;  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
