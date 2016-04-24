@@ -21,6 +21,18 @@ public class AppConstant {
 
     public static final String LOGIN_TYPE_MOSQUE = "mosque";
 
+    public static final int FAJAR = 1;
+
+    public static final int JUHAR = 2;
+
+    public static final int ASAR = 3;
+
+    public static final int MAGRIB = 4;
+
+    public static final int ESHA = 5;
+
+    public static final int EID = 6;
+
 
     public static String getUserRegUrl(String username, String email, String password) {
         return BaseUrl + "register.php?"
@@ -64,9 +76,15 @@ public class AppConstant {
 
     }
 
-    public static String getUrlForPoliceInfo(String region) {
-        return BaseUrl + "police.php?"
-                + "region=" + region;
+    public static String getMosueTimeUpdateUrl(String id, String fajar, String juhar, String asar, String magrib, String esha, String eid) {
+        return BaseUrl + "update_time.php?"
+                + "id=" + id
+                + "&fajar=" + fajar
+                + "&juhar=" + juhar
+                + "&asar=" + asar
+                + "&magrib=" + magrib
+                + "&esha=" + esha
+                + "&eid=" + eid;
     }
 
     public static String getUrlForHistoryList(String user_id, double lat, double lng, int range) {

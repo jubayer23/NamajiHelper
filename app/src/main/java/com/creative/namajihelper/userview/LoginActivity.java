@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.namajihelper.MainActivity;
+import com.creative.namajihelper.MosqueHome;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.alertbanner.AlertDialogForAnything;
 import com.creative.namajihelper.appdata.AppConstant;
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (!AppController.getInstance().getPrefManger().getLoginType().isEmpty()) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
 
             startActivity(intent);
 
@@ -75,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity = this;
 
         init();
-
 
 
         /****************BUTTON INITIALIZATION******************/
@@ -126,8 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
         gpsEnableTool = new GpsEnableTool(this);
 
-        if(!gps.canGetLocation())
-        {
+        if (!gps.canGetLocation()) {
             gpsEnableTool.enableGPs();
         }
 
@@ -239,8 +238,15 @@ public class LoginActivity extends AppCompatActivity {
                     String mosqueType = response.getString("mosque_type");
                     Double lat = response.getDouble("lat");
                     Double lng = response.getDouble("lng");
+                    String fajar = response.getString("fajar");
+                    String juhar = response.getString("juhar");
+                    String asar = response.getString("asar");
+                    String magrib = response.getString("magrib");
+                    String esha = response.getString("esha");
+                    String eid = response.getString("eid");
 
-                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng);
+
+                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha, eid);
                     AppController.getInstance().getPrefManger().setMosqueObject(mosqueObj);
 
                 }
@@ -272,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
         if (success == 1) {
 
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
 
             startActivity(intent);
 
@@ -305,7 +311,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this,RegisterNamaji.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterNamaji.class);
                 startActivity(intent);
 
                 dialog_start.dismiss();
@@ -315,7 +321,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this,RegisterMosque.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterMosque.class);
                 startActivity(intent);
 
                 dialog_start.dismiss();
@@ -325,7 +331,6 @@ public class LoginActivity extends AppCompatActivity {
 
         dialog_start.show();
     }
-
 
 
     @Override

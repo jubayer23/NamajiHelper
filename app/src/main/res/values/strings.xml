@@ -3,4 +3,5 @@
     <string name="login_activity">NamajiHelper</string>
     <string name="mosque_register_activity">Mosque Register</string>
     <string name="namaji_register_activity">Namaji Register</string>
+    <string name="mosque_home_activity">Mosque Admin Panel</string>
 </resources>

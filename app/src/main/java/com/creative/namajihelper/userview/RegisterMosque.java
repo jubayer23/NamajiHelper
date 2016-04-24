@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -83,7 +84,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
 
                 mosqueType = item;
 
-               // Log.d("DEBUG_type", item);
+                // Log.d("DEBUG_type", item);
             }
 
             @Override
@@ -102,7 +103,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
                     if (checkWarn && !lat.isEmpty() && !lng.isEmpty()) {
 
                         mosqueName = mosqueName_ed.getText().toString().trim();
-                        mosqueName = mosqueName.replaceAll(" ","%20");
+                        mosqueName = mosqueName.replaceAll(" ", "%20");
                         mobileNo = mobileNo_ed.getText().toString().trim();
                         password = password_ed.getText().toString().trim();
 
@@ -208,6 +209,8 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
 
+                        //Log.d("DEBUG_res")
+
                         try {
 
 
@@ -245,8 +248,14 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
 
                 int id = response.getInt("mosque_id");
 
+                String fajar = response.getString("fajar");
+                String juhar = response.getString("juhar");
+                String asar = response.getString("asar");
+                String magrib = response.getString("magrib");
+                String esha = response.getString("esha");
+                String eid = response.getString("eid");
 
-                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20"," "), mosqueType, mobileNo, Double.parseDouble(lat),Double.parseDouble(lng));
+                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20", " "), mosqueType, mobileNo, Double.parseDouble(lat), Double.parseDouble(lng), fajar, juhar, asar, magrib, esha, eid);
 
                 AppController.getInstance().getPrefManger().setMosqueObject(mosque);
 

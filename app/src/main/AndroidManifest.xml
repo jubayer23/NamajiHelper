@@ -58,6 +58,14 @@
                 android:value=".userview.LoginActivity" />
         </activity>
 
+        /*************************************MOSQUE HOME ACTIVITY*************************************/
+        <activity
+            android:name=".MosqueHome"
+            android:label="@string/mosque_home_activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+        </activity>
+
         /*************************************META DATA******************************************************/
         <!-- Goolge API Key -->
         <meta-data
