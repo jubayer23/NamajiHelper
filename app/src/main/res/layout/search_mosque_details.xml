@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/mosque_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="MOSQUE NAME"/>
+
     <LinearLayout
         android:id="@+id/ll_fajar"
         android:layout_width="match_parent"
@@ -18,7 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="*FAJAR"
+            android:text="FAJAR"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/fajar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -38,7 +57,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="*JUHAR"
+            android:text="JUHAR"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/juhar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
             android:textSize="20sp" />
 
 
@@ -58,7 +86,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="*ASAR"
+            android:text="ASAR"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/asar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
             android:textSize="20sp" />
 
 
@@ -78,7 +115,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="*MAGRIB"
+            android:text="MAGRIB"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/magrib"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
             android:textSize="20sp" />
 
 
@@ -98,7 +144,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="*ESHA"
+            android:text="ESHA"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/esha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
             android:textSize="20sp" />
 
 
@@ -121,15 +176,24 @@
             android:text="EID"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/eid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
+            android:textSize="20sp" />
+
 
     </LinearLayout>
 
 
     <Button
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_show_direction"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@drawable/btn_login_selector"
-        android:text="EDIT" />
+        android:text="Show Direction" />
 </LinearLayout>

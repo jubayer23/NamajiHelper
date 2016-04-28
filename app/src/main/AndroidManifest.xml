@@ -66,6 +66,38 @@
             android:theme="@style/AppTheme">
         </activity>
 
+        /*************************************NAMAJI HOME ACTIVITY*************************************/
+        <activity
+            android:name=".NamajiHome"
+            android:label="@string/namaji_home_activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        /*************************************SEARCH RESULT ACTIVITY*************************************/
+        <activity
+            android:name=".NamajiSearchResult"
+            android:label="@string/search_result"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".NamajiHome"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NamajiHome" />
+        </activity>
+
+        /*************************************SEARCH MOSQUE DETAILS ACTIVITY*************************************/
+        <activity
+            android:name=".SearchMosqueDetails"
+            android:label="@string/search_mosque_detals"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".NamajiSearchResult"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NamajiSearchResult" />
+        </activity>
+
         /*************************************META DATA******************************************************/
         <!-- Goolge API Key -->
         <meta-data

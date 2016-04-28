@@ -2,12 +2,11 @@ package com.creative.namajihelper;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.creative.namajihelper.adapter.SampleFragmentPagerAdapter;
+import com.creative.namajihelper.adapter.MosqueFragmentPagerAdapter;
 
 /**
  * Created by comsol on 24-Apr-16.
@@ -25,7 +24,7 @@ public class MosqueHome extends AppCompatActivity {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new MosqueFragmentPagerAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);

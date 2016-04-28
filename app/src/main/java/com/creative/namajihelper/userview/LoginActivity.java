@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.namajihelper.MainActivity;
 import com.creative.namajihelper.MosqueHome;
+import com.creative.namajihelper.NamajiHome;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.alertbanner.AlertDialogForAnything;
 import com.creative.namajihelper.appdata.AppConstant;
@@ -65,11 +67,20 @@ public class LoginActivity extends AppCompatActivity {
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (!AppController.getInstance().getPrefManger().getLoginType().isEmpty()) {
-            Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
+            if (AppController.getInstance().getPrefManger().getLoginType().equalsIgnoreCase(AppConstant.LOGIN_TYPE_NAMAJI)) {
+                Intent intent = new Intent(LoginActivity.this, NamajiHome.class);
 
-            startActivity(intent);
+                startActivity(intent);
 
-            finish();
+                finish();
+            } else {
+                Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
+
+                startActivity(intent);
+
+                finish();
+            }
+
         }
 
 
@@ -217,14 +228,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private void parseJsonFeed(JSONObject response) {
         try {
-
+            if (progressDialog.isShowing()) progressDialog.dismiss();
 
             int status = response.getInt("success");
             //Log.d("DEBUG_loginStatus", String.valueOf(status));
 
             if (status == 1) {
+
                 String login_type = response.getString("user_type");
-                if (login_type.equalsIgnoreCase("namaji")) {
+
+                if (login_type.equalsIgnoreCase(AppConstant.LOGIN_TYPE_NAMAJI)) {
                     int id = response.getInt("user_id");
                     String name = response.getString("username");
 
@@ -232,7 +245,6 @@ public class LoginActivity extends AppCompatActivity {
                     AppController.getInstance().getPrefManger().setNamajiObject(namajiObj);
 
                 } else {
-
                     int id = response.getInt("mosque_id");
                     String mosqueName = response.getString("mosque_name");
                     String mosqueType = response.getString("mosque_type");
@@ -245,21 +257,17 @@ public class LoginActivity extends AppCompatActivity {
                     String esha = response.getString("esha");
                     String eid = response.getString("eid");
 
-
                     Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha, eid);
                     AppController.getInstance().getPrefManger().setMosqueObject(mosqueObj);
 
                 }
 
                 AppController.getInstance().getPrefManger().setLoginType(login_type);
+                gotoFrontPage(login_type);
 
+            } else {
+                AlertDialogForAnything.showAlertDialogWhenComplte(this, "Login Failed", "InValid Login Information", false);
             }
-
-
-            if (progressDialog.isShowing()) progressDialog.dismiss();
-
-
-            gotoFrontPage(status);
 
 
         } catch (JSONException e) {
@@ -274,18 +282,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void gotoFrontPage(int success) {
-        if (success == 1) {
+    public void gotoFrontPage(String login_type) {
+        if (login_type.equalsIgnoreCase(AppConstant.LOGIN_TYPE_NAMAJI)) {
 
-
-            Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
+            Intent intent = new Intent(LoginActivity.this, NamajiHome.class);
 
             startActivity(intent);
 
 
             finish();
         } else {
-            AlertDialogForAnything.showAlertDialogWhenComplte(this, "Login Failed", "InValid Login Information", false);
+            Intent intent = new Intent(LoginActivity.this, MosqueHome.class);
+
+            startActivity(intent);
+
+
+            finish();
         }
 
     }

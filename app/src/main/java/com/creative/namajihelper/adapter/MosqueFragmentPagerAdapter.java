@@ -10,11 +10,11 @@ import com.creative.namajihelper.userview.fragment.MosqueTimeTable;
 /**
  * Created by comsol on 24-Apr-16.
  */
-public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MosqueFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[]{"Details", "Time-Table"};
+    private String tabTitles[] = new String[]{"Time-Table", "Details"};
 
-    public SampleFragmentPagerAdapter(FragmentManager fm) {
+    public MosqueFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -29,9 +29,9 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0: // Fragment # 0 - This will show FirstFragment
-                return MosqueDetails.newInstance(0);
+                return MosqueTimeTable.newInstance(0);
             case 1: // Fragment # 0 - This will show FirstFragment different title
-                return MosqueTimeTable.newInstance(1);
+                return MosqueDetails.newInstance(1);
             default:
                 return null;
         }

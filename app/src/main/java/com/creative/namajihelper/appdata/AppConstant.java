@@ -87,9 +87,9 @@ public class AppConstant {
                 + "&eid=" + eid;
     }
 
-    public static String getUrlForHistoryList(String user_id, double lat, double lng, int range) {
-        return BaseUrl + "history.php?"
-                + "&user_id=" + user_id
+    public static String getNeabyMosqueUrl(String mosque_type, String lat, String lng, String range) {
+        return BaseUrl + "nearby_mosque.php?"
+                + "&mosque_type=" + mosque_type
                 + "&lat=" + lat
                 + "&lng=" + lng
                 + "&range=" + String.valueOf(range);

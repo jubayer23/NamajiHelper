@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.namajihelper.MainActivity;
+import com.creative.namajihelper.MosqueHome;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.alertbanner.AlertDialogForAnything;
 import com.creative.namajihelper.appdata.AppConstant;
@@ -294,7 +295,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
     public void gotoFrontPage() {
 
         AppController.getInstance().getPrefManger().setLoginType(AppConstant.LOGIN_TYPE_MOSQUE);
-        Intent intent = new Intent(RegisterMosque.this, MainActivity.class);
+        Intent intent = new Intent(RegisterMosque.this, MosqueHome.class);
 
         startActivity(intent);
         LoginActivity.LoginActivity.finish();

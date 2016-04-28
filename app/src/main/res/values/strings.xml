@@ -4,4 +4,9 @@
     <string name="mosque_register_activity">Mosque Register</string>
     <string name="namaji_register_activity">Namaji Register</string>
     <string name="mosque_home_activity">Mosque Admin Panel</string>
+    <string name="search_result">Search Result</string>
+    <string name="namaji_home_activity">Namaji</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_about">About Us</string>
+    <string name="search_mosque_detals">Mosque Details</string>
 </resources>

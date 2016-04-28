@@ -332,18 +332,43 @@ public class MosqueTimeTable extends Fragment {
                 if (j == 0) {
                     hour = ((EditText) v).getText().toString().replaceAll("\\s+", "");
                     if (hour.isEmpty()) {
+                        if (i == ll_container.size() - 1)//here (ll_container.size()-1) == EID field
+                        {
+                            hour = "0";
+                        } else {
+                            pDialog.dismiss();
+                            cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
+                                    "Please Fill All * Sign Field With Valid Input!", false);
+                            return;
+                        }
+
+                    }
+                    if(Integer.parseInt(hour)>12)
+                    {
                         pDialog.dismiss();
-                        cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
-                                "Please Fill All The Field With Valid Input!", false);
+                        cd.showAlertDialogToNetworkConnection(getActivity(), "Invalid Input",
+                                "Hour cant be greater then 12 !", false);
                         return;
                     }
                     time_text = hour;
                 } else if (j == 1) {
                     minute = ((EditText) v).getText().toString().replaceAll("\\s+", "");
                     if (minute.isEmpty()) {
+                        if (i == ll_container.size() - 1)//here (ll_container.size()-1) == EID field
+                        {
+                            minute = "00";
+                        } else {
+                            pDialog.dismiss();
+                            cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
+                                    "Please Fill All * Sign Field With Valid Input!", false);
+                            return;
+                        }
+                    }
+                    if(Integer.parseInt(minute)>60)
+                    {
                         pDialog.dismiss();
-                        cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
-                                "Please Fill All The Field With Valid Input!", false);
+                        cd.showAlertDialogToNetworkConnection(getActivity(), "Invalid Input",
+                                "Minute cant be greater then 60 !", false);
                         return;
                     }
                 } else {
