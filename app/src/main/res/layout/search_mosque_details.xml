@@ -2,17 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/mosque_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="MOSQUE NAME"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/mosque_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:text="MOSQUE NAME"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/fav_no"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_fajar"
@@ -194,6 +211,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:background="@drawable/btn_login_selector"
         android:text="Show Direction" />
 </LinearLayout>

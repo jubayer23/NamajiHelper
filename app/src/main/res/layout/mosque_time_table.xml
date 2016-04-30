@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -131,5 +132,8 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@drawable/btn_login_selector"
-        android:text="EDIT" />
+        android:text="EDIT"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.model.Mosque;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -24,19 +22,23 @@ public class SearchListAdapter extends BaseAdapter {
     private List<Mosque> Displayedplaces;
     private List<Mosque> Originalplaces;
     private LayoutInflater inflater;
-   Location myLocation;
+    Location myLocation;
     @SuppressWarnings("unused")
     private Activity activity;
-
+    private boolean FLAG_DISTANCE_AVAILABLE = true;
 
     public SearchListAdapter(Activity activity, List<Mosque> histories, double user_lat, double user_lng) {
         this.activity = activity;
         this.Displayedplaces = histories;
         this.Originalplaces = histories;
-        myLocation = new Location("");//provider name is unecessary
-        myLocation.setLatitude(user_lat);//your coords of course
-        myLocation.setLongitude(user_lng);
-
+        if (user_lat == 0 && user_lng == 0) {
+            FLAG_DISTANCE_AVAILABLE = false;
+        } else {
+            FLAG_DISTANCE_AVAILABLE = true;
+            myLocation = new Location("");//provider name is unecessary
+            myLocation.setLatitude(user_lat);//your coords of course
+            myLocation.setLongitude(user_lng);
+        }
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,7 +68,6 @@ public class SearchListAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
 
-
             viewHolder.mosqueName = (TextView) convertView
                     .findViewById(R.id.mosque_name);
 
@@ -83,13 +84,18 @@ public class SearchListAdapter extends BaseAdapter {
         Mosque mosque = Displayedplaces.get(position);
 
         viewHolder.mosqueName.setText(mosque.getMosqueName());
-        Location targetLocation = new Location("");//provider name is unecessary
-        targetLocation.setLatitude(mosque.getLat());//your coords of course
-        targetLocation.setLongitude(mosque.getLng());
 
-        int distanceInMeters = (int) myLocation.distanceTo(targetLocation);
+        if (FLAG_DISTANCE_AVAILABLE) {
+            Location targetLocation = new Location("");//provider name is unecessary
+            targetLocation.setLatitude(mosque.getLat());//your coords of course
+            targetLocation.setLongitude(mosque.getLng());
 
-        viewHolder.distance.setText(String.valueOf(distanceInMeters));
+            int distanceInMeters = (int) myLocation.distanceTo(targetLocation);
+
+            viewHolder.distance.setText(String.valueOf(distanceInMeters) + " miters");
+        } else {
+            viewHolder.distance.setVisibility(View.GONE);
+        }
 
 
         return convertView;
@@ -100,11 +106,8 @@ public class SearchListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-
     private static class ViewHolder {
         private TextView mosqueName;
         private TextView distance;
     }
-
-
 }

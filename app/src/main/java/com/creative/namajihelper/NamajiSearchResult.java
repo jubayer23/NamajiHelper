@@ -29,6 +29,8 @@ import java.util.ArrayList;
 /**
  * Created by comsol on 28-Apr-16.
  */
+
+
 public class NamajiSearchResult extends AppCompatActivity {
 
     ListView listView;
@@ -42,7 +44,7 @@ public class NamajiSearchResult extends AppCompatActivity {
 
     SearchListAdapter searchListAdapter;
 
-    double lat,lng;
+    double lat, lng;
 
     public static final String KEY_OBJECT = "mosque_ob";
 
@@ -63,14 +65,14 @@ public class NamajiSearchResult extends AppCompatActivity {
         sendRequestToServer(AppConstant.getNeabyMosqueUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_TYPE), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), intent.getStringExtra(NamajiSearch.KEY_RANGE)));
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Mosque mosque = mosqueList.get(i);
-                Intent intent = new Intent(NamajiSearchResult.this,SearchMosqueDetails.class);
-                intent.putExtra(KEY_OBJECT,  mosque);
+                Intent intent = new Intent(NamajiSearchResult.this, SearchMosqueDetails.class);
+                intent.putExtra(KEY_OBJECT, mosque);
                 startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
     }
@@ -146,7 +148,7 @@ public class NamajiSearchResult extends AppCompatActivity {
 
             if (searchListAdapter == null) {
                 searchListAdapter = new SearchListAdapter(
-                        NamajiSearchResult.this, mosqueList,lat,lng);
+                        NamajiSearchResult.this, mosqueList, lat, lng);
                 listView.setAdapter(searchListAdapter);
 
             } else {

@@ -1,15 +1,19 @@
 package com.creative.namajihelper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.creative.namajihelper.adapter.MosqueFragmentPagerAdapter;
 import com.creative.namajihelper.adapter.NamajiFragmentPagerAdapter;
+import com.creative.namajihelper.appdata.AppController;
+import com.creative.namajihelper.userview.LoginActivity;
 
 /**
  * Created by comsol on 28-Apr-16.
@@ -24,6 +28,12 @@ public class NamajiHome extends AppCompatActivity {
         setContentView(R.layout.activity_mosque_home);
 
         namajiHomeActivity = this;
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.namaji_home_activity);
+        getSupportActionBar().setIcon(R.mipmap.logo);
+
 
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
@@ -51,6 +61,16 @@ public class NamajiHome extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_about) {
+            return true;
+        }
+        if (id == R.id.action_logout) {
+            AppController.getInstance().getPrefManger().setLoginType("");
+            Intent intent = new Intent(NamajiHome.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
 

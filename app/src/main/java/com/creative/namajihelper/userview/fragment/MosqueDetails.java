@@ -24,7 +24,6 @@ public class MosqueDetails extends Fragment {
 
     private int mPage;
 
-    Button btn_logout;
 
     public static MosqueDetails newInstance(int page) {
         Bundle args = new Bundle();
@@ -45,8 +44,8 @@ public class MosqueDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mosque_details, container, false);
-       // TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-       // tvTitle.setText("Fragment #" + mPage);
+        // TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+        // tvTitle.setText("Fragment #" + mPage);
         return view;
     }
 
@@ -55,19 +54,9 @@ public class MosqueDetails extends Fragment {
         super.onActivityCreated(savedInstanceState);
         init();
 
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppController.getInstance().getPrefManger().setLoginType("");
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                MosqueHome.mosqueHomeActivity.finish();
-            }
-        });
     }
 
     private void init() {
 
-        btn_logout = (Button)getActivity().findViewById(R.id.btn_logout);
     }
 }

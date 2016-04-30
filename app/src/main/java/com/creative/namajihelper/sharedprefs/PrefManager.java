@@ -9,6 +9,8 @@ import com.creative.namajihelper.model.Mosque;
 import com.creative.namajihelper.model.Namaji;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 
 public class PrefManager {
     private static final String TAG = PrefManager.class.getSimpleName();
@@ -86,6 +88,38 @@ public class PrefManager {
         Namaji namaji = gson.fromJson(json, Namaji.class);
 
         return namaji;
+    }
+
+    public void setFavPlaces(ArrayList<Mosque> list){
+        editor = pref.edit();
+        editor.putInt("Count",  list.size());
+        int count = 0;
+        for (Mosque i : list){
+
+            Gson gson = new Gson();
+            String json = gson.toJson(i); // myObject - instance of MyObject
+
+            editor.putString("favouriteplace_" + count++, json);
+        }
+
+        editor.commit();
+    }
+    public ArrayList<Mosque> getFavPlaces(){
+        ArrayList<Mosque> temp = new ArrayList<Mosque>();
+
+        int count = pref.getInt("Count", 0);
+        temp.clear();
+        for (int i = 0; i < count; i++){
+
+            Gson gson = new Gson();
+            String json = pref.getString("favouriteplace_" + i, "");
+            Mosque obj = gson.fromJson(json, Mosque.class);
+            temp.add(obj);
+
+
+            //temp.add(mSharedPreferences.getString("favouriteplace_" + i, ""));
+        }
+        return temp;
     }
 
 

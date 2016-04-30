@@ -19,7 +19,6 @@ public class Mosque implements Parcelable{
     String magrib;
     String esha;
     String eid;
-
     public Mosque(int id, String mosqueName, String mosqueType, String mobileNo, double lat, double lng, String fajar, String juhar, String asar, String magrib, String esha, String eid) {
         this.id = id;
         this.mosqueName = mosqueName;

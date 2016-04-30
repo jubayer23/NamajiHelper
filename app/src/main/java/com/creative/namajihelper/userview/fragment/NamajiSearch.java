@@ -26,6 +26,8 @@ import com.creative.namajihelper.model.Namaji;
 import com.creative.namajihelper.utils.GPSTracker;
 import com.creative.namajihelper.utils.GpsEnableTool;
 
+import java.util.ArrayList;
+
 /**
  * Created by comsol on 24-Apr-16.
  */
@@ -104,15 +106,15 @@ public class NamajiSearch extends Fragment {
         gpsEnableTool.enableGPs();
 
         tv_welcomeNote = (TextView) getActivity().findViewById(R.id.tv_welcome);
-        tv_welcomeNote.setText("Welcome " + namaji.getUserName());
+        tv_welcomeNote.setText("Salam " + namaji.getUserName());
 
         btn_neaby_mosque = (Button) getActivity().findViewById(R.id.btn_nearby_mosque);
     }
 
     private void showSettingDialog() {
         final String[] mosque_type = new String[1];
-        final String lat=String.valueOf(gps.getLatitude());
-        final String lng=String.valueOf(gps.getLongitude());
+        final String lat = String.valueOf(gps.getLatitude());
+        final String lng = String.valueOf(gps.getLongitude());
         final String[] range = new String[1];
 
         final Dialog dialog_start = new Dialog(getActivity(),
@@ -121,18 +123,20 @@ public class NamajiSearch extends Fragment {
         dialog_start.setContentView(R.layout.dialog_search);
 
         Spinner mosqueType_sp = (Spinner) dialog_start.findViewById(R.id.dialog_spinner_mosque_type);
+        String[] mosqueType = new String[AppConstant.mosqueType.length + 1];
+        for (int i = 0; i < AppConstant.mosqueType.length; i++) {
+            mosqueType[i] = AppConstant.mosqueType[i];
+        }
+        mosqueType[AppConstant.mosqueType.length] = "All";
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (getActivity(), R.layout.spinner_item, AppConstant.mosqueType);
+                (getActivity(), R.layout.spinner_item, mosqueType);
         mosqueType_sp.setAdapter(dataAdapter);
 
         SeekBar rangeBar = (SeekBar) dialog_start.findViewById(R.id.dialog_seekbar);
         final TextView seekbar_text = (TextView) dialog_start.findViewById(R.id.dialog_seekbar_text);
 
 
-
-
         LinearLayout btn_submit = (LinearLayout) dialog_start.findViewById(R.id.dialog_btn_submit);
-
 
 
         mosqueType_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -177,10 +181,10 @@ public class NamajiSearch extends Fragment {
 
                 Intent intent = new Intent(getActivity(), NamajiSearchResult.class);
 
-                intent.putExtra(KEY_MOSQUE_TYPE,mosque_type[0]);
-                intent.putExtra(KEY_LAT,lat);
-                intent.putExtra(KEY_LNG,lng);
-                intent.putExtra(KEY_RANGE,range[0]);
+                intent.putExtra(KEY_MOSQUE_TYPE, mosque_type[0].toLowerCase());
+                intent.putExtra(KEY_LAT, lat);
+                intent.putExtra(KEY_LNG, lng);
+                intent.putExtra(KEY_RANGE, range[0]);
 
                 startActivity(intent);
 
