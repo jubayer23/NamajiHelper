@@ -1,8 +1,10 @@
 package com.creative.namajihelper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +34,7 @@ public class SearchMosqueDetails extends AppCompatActivity {
 
     ArrayList<Mosque> favMosqueList;
 
-    int fav_mosque_index_in_arraylist =0;
+    int fav_mosque_index_in_arraylist = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class SearchMosqueDetails extends AppCompatActivity {
         setContentView(R.layout.search_mosque_details);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        FLAG_ALREADY_FAV=false;
+        FLAG_ALREADY_FAV = false;
         mosque = getIntent().getParcelableExtra(NamajiSearchResult.KEY_OBJECT);
 
         init();
@@ -51,15 +53,15 @@ public class SearchMosqueDetails extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (FLAG_ALREADY_FAV) {
-                    img_fav.setImageResource(R.drawable.fav_no);
-                    favMosqueList.remove(fav_mosque_index_in_arraylist);
+
+                    showAlertDialog();
 
                 } else {
                     img_fav.setImageResource(R.drawable.fav_yes);
                     favMosqueList.add(mosque);
+                    AppController.getInstance().getPrefManger().setFavPlaces(favMosqueList);
                 }
 
-                AppController.getInstance().getPrefManger().setFavPlaces(favMosqueList);
 
             }
         });
@@ -111,10 +113,10 @@ public class SearchMosqueDetails extends AppCompatActivity {
                 int hour = Integer.parseInt(b[i]);
 
                 if (hour > 12) {
-                    am_pm = "PM";
+                    am_pm = getResources().getString(R.string.pm);
                     time_text = time_text + String.valueOf(hour - 12);
                 } else {
-                    am_pm = "AM";
+                    am_pm = getResources().getString(R.string.am);
                     time_text = time_text + b[i];
                 }
             } else {
@@ -148,5 +150,38 @@ public class SearchMosqueDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.alertTitle);
+        builder.setMessage(R.string.alertMessage);
+
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing but close the dialog
+                img_fav.setImageResource(R.drawable.fav_no);
+                favMosqueList.remove(fav_mosque_index_in_arraylist);
+                AppController.getInstance().getPrefManger().setFavPlaces(favMosqueList);
+
+                dialog.dismiss();
+            }
+
+        });
+
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

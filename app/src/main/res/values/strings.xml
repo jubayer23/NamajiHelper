@@ -10,4 +10,25 @@
     <string name="action_about">About Us</string>
     <string name="search_mosque_detals">Mosque Details</string>
     <string name="action_logout">Logout</string>
+    <string name="alertTitle">Alert!!</string>
+    <string name="alertMessage">Are you sure you want to remove this mosque from your favourite list?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="pm">PM</string>
+    <string name="am">AM</string>
+    <string name="edit">EDIT</string>
+    <string name="submit">SUBMIT</string>
+    <string name="alertTitleInterner">No Internet Connection!</string>
+    <string name="alertMessageInternet">You don\'t have internet connection.</string>
+    <string name="savingMessage">Saving.... Please wait...</string>
+    <string name="alertFieldEmptyTitle">Field Empty</string>
+    <string name="alertFieldEmptyMessage">Please Fill All * Sign Field With Valid Input!</string>
+    <string name="alertInvalidInputTitle">Invalid Input</string>
+    <string name="alertInvalidInputHour">Hour cant be greater then 12 !</string>
+    <string name="alertFieldEmptyMessage2">Please Fill All * Sign Field With Valid Input!</string>
+    <string name="alertInvalidInputMinute">Minute cant be greater then 60 !</string>
+    <string name="all">All</string>
+    <string name="distanceUnit">km</string>
+    <string name="km">km</string>
+    <string name="miters">miters</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,10 +60,18 @@ public class NamajiSearchResult extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+
         lat = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LAT));
         lng = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LNG));
 
-        sendRequestToServer(AppConstant.getNeabyMosqueUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_TYPE), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), intent.getStringExtra(NamajiSearch.KEY_RANGE)));
+
+        if (intent.getStringExtra(NamajiSearch.KEY_SEARCH_TYPE).equalsIgnoreCase(NamajiSearch.BY_NAME)) {
+            sendRequestToServer(AppConstant.getSearchByNameUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_NAME)));
+
+        } else {
+            sendRequestToServer(AppConstant.getNeabyMosqueUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_TYPE), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), intent.getStringExtra(NamajiSearch.KEY_RANGE)));
+
+        }
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,6 +107,8 @@ public class NamajiSearchResult extends AppCompatActivity {
         progressDialog.show();
 
         String url = url_all_products;
+
+        //Log.d("DEBUG",url);
 
         StringRequest req = new StringRequest(Request.Method.GET, url,
                 new com.android.volley.Response.Listener<String>() {

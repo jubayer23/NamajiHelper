@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -26,17 +27,19 @@ import com.creative.namajihelper.model.Namaji;
 import com.creative.namajihelper.utils.GPSTracker;
 import com.creative.namajihelper.utils.GpsEnableTool;
 
-import java.util.ArrayList;
-
 /**
  * Created by comsol on 24-Apr-16.
  */
 public class NamajiSearch extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String KEY_SEARCH_TYPE = "search_type";
+    public static final String BY_NAME = "by_name";
+    public static final String BY_DISTANCE = "by_distance";
+    public static final String KEY_MOSQUE_NAME = "mosque_name";
 
     private int mPage;
 
-    Button btn_neaby_mosque;
+    Button btn_neaby_mosque,btn_searchby_name;
 
     TextView tv_welcomeNote;
 
@@ -95,6 +98,17 @@ public class NamajiSearch extends Fragment {
 
             }
         });
+        btn_searchby_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gps = new GPSTracker(getActivity());
+
+
+                    showDialogForSearchByName();
+
+
+            }
+        });
 
     }
 
@@ -109,6 +123,8 @@ public class NamajiSearch extends Fragment {
         tv_welcomeNote.setText("Salam " + namaji.getUserName());
 
         btn_neaby_mosque = (Button) getActivity().findViewById(R.id.btn_nearby_mosque);
+        btn_searchby_name = (Button) getActivity().findViewById(R.id.btn_find_by_name);
+
     }
 
     private void showSettingDialog() {
@@ -120,14 +136,14 @@ public class NamajiSearch extends Fragment {
         final Dialog dialog_start = new Dialog(getActivity(),
                 android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog_start.setCancelable(true);
-        dialog_start.setContentView(R.layout.dialog_search);
+        dialog_start.setContentView(R.layout.dialog_search_nearby);
 
         Spinner mosqueType_sp = (Spinner) dialog_start.findViewById(R.id.dialog_spinner_mosque_type);
         String[] mosqueType = new String[AppConstant.mosqueType.length + 1];
         for (int i = 0; i < AppConstant.mosqueType.length; i++) {
             mosqueType[i] = AppConstant.mosqueType[i];
         }
-        mosqueType[AppConstant.mosqueType.length] = "All";
+        mosqueType[AppConstant.mosqueType.length] = getResources().getString(R.string.all);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (getActivity(), R.layout.spinner_item, mosqueType);
         mosqueType_sp.setAdapter(dataAdapter);
@@ -161,7 +177,7 @@ public class NamajiSearch extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                seekbar_text.setText(progress + " miters");
+                seekbar_text.setText(progress + " " + getResources().getString(R.string.distanceUnit));
             }
 
             @Override
@@ -181,7 +197,8 @@ public class NamajiSearch extends Fragment {
 
                 Intent intent = new Intent(getActivity(), NamajiSearchResult.class);
 
-                intent.putExtra(KEY_MOSQUE_TYPE, mosque_type[0].toLowerCase());
+                intent.putExtra(KEY_SEARCH_TYPE, BY_DISTANCE);
+
                 intent.putExtra(KEY_LAT, lat);
                 intent.putExtra(KEY_LNG, lng);
                 intent.putExtra(KEY_RANGE, range[0]);
@@ -194,4 +211,54 @@ public class NamajiSearch extends Fragment {
 
         dialog_start.show();
     }
+
+    private void showDialogForSearchByName() {
+
+        final Dialog dialog_start = new Dialog(getActivity(),
+                android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        dialog_start.setCancelable(true);
+        dialog_start.setContentView(R.layout.dialog_search_byname);
+
+        final EditText ed_mosque_name = (EditText) dialog_start.findViewById(R.id.ed_mosque_name);
+
+        LinearLayout btn_submit = (LinearLayout) dialog_start.findViewById(R.id.dialog_btn_submit);
+
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!ed_mosque_name.getText().toString().isEmpty()) {
+                    gps = new GPSTracker(getActivity());
+
+                    String mosque_name = ed_mosque_name.getText().toString().replaceAll(" ", "%20");
+                    Intent intent = new Intent(getActivity(), NamajiSearchResult.class);
+
+                    intent.putExtra(KEY_SEARCH_TYPE, BY_NAME);
+                    intent.putExtra(KEY_MOSQUE_NAME, mosque_name);
+                    if(gps.canGetLocation())
+                    {
+                        intent.putExtra(KEY_LAT, String.valueOf(gps.getLatitude()));
+                        intent.putExtra(KEY_LNG, String.valueOf(gps.getLongitude()));
+                    }else
+                    {
+                        intent.putExtra(KEY_LAT, "0");
+                        intent.putExtra(KEY_LNG, "0");
+                    }
+
+
+                    startActivity(intent);
+                }else
+                {
+                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(),getResources().getString(R.string.alertTitleInterner),getResources().getString(R.string.alertMessageInternet),false);
+                }
+
+
+            }
+        });
+
+
+        dialog_start.show();
+    }
+
 }

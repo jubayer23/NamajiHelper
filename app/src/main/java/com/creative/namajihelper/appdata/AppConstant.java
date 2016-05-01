@@ -89,10 +89,16 @@ public class AppConstant {
 
     public static String getNeabyMosqueUrl(String mosque_type, String lat, String lng, String range) {
         return BaseUrl + "nearby_mosque.php?"
-                + "&mosque_type=" + mosque_type
+                + "mosque_type=" + mosque_type
                 + "&lat=" + lat
                 + "&lng=" + lng
                 + "&range=" + String.valueOf(range);
+
+    }
+
+    public static String getSearchByNameUrl(String mosque_name) {
+        return BaseUrl + "searchby_name.php?"
+                + "mosque_name=" + mosque_name;
 
     }
 

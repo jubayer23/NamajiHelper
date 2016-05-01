@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +93,19 @@ public class SearchListAdapter extends BaseAdapter {
 
             int distanceInMeters = (int) myLocation.distanceTo(targetLocation);
 
-            viewHolder.distance.setText(String.valueOf(distanceInMeters) + " miters");
+            //Log.d("DEBUG",String.valueOf(distanceInMeters));
+
+            if(String.valueOf(distanceInMeters).length() > 3)
+            {
+                float distanceInKm = distanceInMeters / 1000;
+
+                viewHolder.distance.setText(String.format("%.1f", distanceInKm) + " " + activity.getResources().getString(R.string.km));
+            }else
+            {
+                viewHolder.distance.setText(String.valueOf(distanceInMeters) + " " +activity.getResources().getString(R.string.miters));
+            }
+
+
         } else {
             viewHolder.distance.setVisibility(View.GONE);
         }

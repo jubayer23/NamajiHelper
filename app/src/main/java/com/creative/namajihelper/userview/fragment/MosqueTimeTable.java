@@ -95,8 +95,8 @@ public class MosqueTimeTable extends Fragment {
             public void onClick(View view) {
 
                 if (cd.isConnectingToInternet()) {
-                    if (btn_edit.getText().toString().equalsIgnoreCase("edit")) {
-                        btn_edit.setText("SUBMIT");
+                    if (btn_edit.getText().toString().equalsIgnoreCase(getResources().getString(R.string.edit))) {
+                        btn_edit.setText(getResources().getString(R.string.submit));
 
                         showEditTextHideTextView();
 
@@ -109,8 +109,8 @@ public class MosqueTimeTable extends Fragment {
 
                     }
                 } else {
-                    cd.showAlertDialogToNetworkConnection(getActivity(), "No Internet Connection",
-                            "You don't have internet connection.", false);
+                    cd.showAlertDialogToNetworkConnection(getActivity(), getResources().getString(R.string.alertTitleInterner),
+                            getResources().getString(R.string.alertMessageInternet), false);
                 }
 
 
@@ -141,7 +141,7 @@ public class MosqueTimeTable extends Fragment {
         btn_edit = (Button) getActivity().findViewById(R.id.btn_edit);
 
         pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Saving.... Please wait...");
+        pDialog.setMessage(getResources().getString(R.string.savingMessage));
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
 
@@ -193,10 +193,10 @@ public class MosqueTimeTable extends Fragment {
             btn_am_pm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (btn_am_pm.getText().toString().equalsIgnoreCase("AM")) {
-                        btn_am_pm.setText("PM");
+                    if (btn_am_pm.getText().toString().equalsIgnoreCase(getResources().getString(R.string.am))) {
+                        btn_am_pm.setText(getResources().getString(R.string.pm));
                     } else {
-                        btn_am_pm.setText("AM");
+                        btn_am_pm.setText(getResources().getString(R.string.am));
                     }
                 }
             });
@@ -284,11 +284,11 @@ public class MosqueTimeTable extends Fragment {
                 int hour = Integer.parseInt(b[i]);
 
                 if (hour > 12) {
-                    btn_am_pm.setText("PM");
+                    btn_am_pm.setText(getResources().getString(R.string.pm));
                     temp_ed_container.get(i).setText(String.valueOf(hour - 12));
                     time_text = time_text + String.valueOf(hour - 12);
                 } else {
-                    btn_am_pm.setText("AM");
+                    btn_am_pm.setText(getResources().getString(R.string.am));
                     temp_ed_container.get(i).setText(b[i]);
                     time_text = time_text + b[i];
                 }
@@ -337,17 +337,16 @@ public class MosqueTimeTable extends Fragment {
                             hour = "0";
                         } else {
                             pDialog.dismiss();
-                            cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
-                                    "Please Fill All * Sign Field With Valid Input!", false);
+                            cd.showAlertDialogToNetworkConnection(getActivity(), getResources().getString(R.string.alertFieldEmptyTitle),
+                                    getResources().getString(R.string.alertFieldEmptyMessage), false);
                             return;
                         }
 
                     }
-                    if(Integer.parseInt(hour)>12)
-                    {
+                    if (Integer.parseInt(hour) > 12) {
                         pDialog.dismiss();
-                        cd.showAlertDialogToNetworkConnection(getActivity(), "Invalid Input",
-                                "Hour cant be greater then 12 !", false);
+                        cd.showAlertDialogToNetworkConnection(getActivity(), getResources().getString(R.string.alertInvalidInputTitle),
+                                getResources().getString(R.string.alertInvalidInputHour), false);
                         return;
                     }
                     time_text = hour;
@@ -359,16 +358,15 @@ public class MosqueTimeTable extends Fragment {
                             minute = "00";
                         } else {
                             pDialog.dismiss();
-                            cd.showAlertDialogToNetworkConnection(getActivity(), "Field Empty",
-                                    "Please Fill All * Sign Field With Valid Input!", false);
+                            cd.showAlertDialogToNetworkConnection(getActivity(), getResources().getString(R.string.alertFieldEmptyTitle),
+                                    getResources().getString(R.string.alertFieldEmptyMessage2), false);
                             return;
                         }
                     }
-                    if(Integer.parseInt(minute)>60)
-                    {
+                    if (Integer.parseInt(minute) > 60) {
                         pDialog.dismiss();
-                        cd.showAlertDialogToNetworkConnection(getActivity(), "Invalid Input",
-                                "Minute cant be greater then 60 !", false);
+                        cd.showAlertDialogToNetworkConnection(getActivity(), getResources().getString(R.string.alertInvalidInputTitle),
+                                getResources().getString(R.string.alertInvalidInputMinute), false);
                         return;
                     }
                 } else {
@@ -426,7 +424,7 @@ public class MosqueTimeTable extends Fragment {
                             if (success == 1) {
                                 AppController.getInstance().getPrefManger().setMosqueObject(mosque);
 
-                                btn_edit.setText("EDIT");
+                                btn_edit.setText(getResources().getString(R.string.edit));
                                 showTextViewHideEditText();
 
                             }
