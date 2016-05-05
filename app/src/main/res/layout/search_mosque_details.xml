@@ -177,6 +177,35 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_jummah"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="JUMMAH"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/jummah"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FAJAR"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_eid"
         android:layout_width="match_parent"
         android:layout_height="60dp"

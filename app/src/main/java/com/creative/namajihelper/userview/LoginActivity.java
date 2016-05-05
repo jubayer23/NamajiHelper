@@ -276,9 +276,10 @@ public class LoginActivity extends AppCompatActivity {
                     String asar = response.getString("asar");
                     String magrib = response.getString("magrib");
                     String esha = response.getString("esha");
+                    String jummah = response.getString("jummah");
                     String eid = response.getString("eid");
 
-                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha, eid,0);
+                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha,jummah, eid,0);
                     AppController.getInstance().getPrefManger().setMosqueObject(mosqueObj);
 
                 }

@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.creative.namajihelper.adapter.SearchListAdapter;
 import com.creative.namajihelper.adapter.SearchListAdapterForNextJamat;
 import com.creative.namajihelper.appdata.AppConstant;
 import com.creative.namajihelper.appdata.AppController;
@@ -30,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by comsol on 28-Apr-16.
@@ -49,7 +47,6 @@ public class NamajiSearchResultForNextjamat extends AppCompatActivity {
 
     SearchListAdapterForNextJamat searchListAdapter;
 
-    double lat, lng;
 
     EditText ed_mosque_name;
 
@@ -69,8 +66,6 @@ public class NamajiSearchResultForNextjamat extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        lat = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LAT));
-        lng = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LNG));
 
 
         sendRequestToServer(AppConstant.getNeabyMosqueUrl("all", intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), AppConstant.defaultMaxRange));
@@ -80,7 +75,7 @@ public class NamajiSearchResultForNextjamat extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Mosque mosque = mosqueList.get(i);
-                Intent intent = new Intent(NamajiSearchResultForNextjamat.this, SearchMosqueDetails.class);
+                Intent intent = new Intent(NamajiSearchResultForNextjamat.this, NamajiMosqueDetails.class);
                 intent.putExtra(KEY_OBJECT, mosque);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
@@ -166,11 +161,13 @@ public class NamajiSearchResultForNextjamat extends AppCompatActivity {
 
             }
 
+            Collections.sort(mosqueList, new Mosque.SalaryComparator());
+
             if (searchListAdapter == null && !mosqueList.isEmpty()) {
                 listView.setVisibility(View.VISIBLE);
                 tv_no_data.setVisibility(View.GONE);
                 searchListAdapter = new SearchListAdapterForNextJamat(
-                        NamajiSearchResultForNextjamat.this, mosqueList, lat, lng);
+                        NamajiSearchResultForNextjamat.this, mosqueList);
                 listView.setAdapter(searchListAdapter);
 
             } else {

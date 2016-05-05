@@ -39,7 +39,7 @@ public class MosqueTimeTable extends Fragment {
 
     Mosque mosque;
 
-    LinearLayout ll_fajar, ll_juhar, ll_asar, ll_magrib, ll_esha, ll_eid;
+    LinearLayout ll_fajar, ll_juhar, ll_asar, ll_magrib, ll_esha,ll_jummah, ll_eid;
 
     ArrayList<LinearLayout> ll_container;
 
@@ -135,6 +135,7 @@ public class MosqueTimeTable extends Fragment {
         ll_asar = (LinearLayout) getActivity().findViewById(R.id.ll_asar);
         ll_magrib = (LinearLayout) getActivity().findViewById(R.id.ll_magrib);
         ll_esha = (LinearLayout) getActivity().findViewById(R.id.ll_esha);
+        ll_jummah = (LinearLayout) getActivity().findViewById(R.id.ll_jummah);
         ll_eid = (LinearLayout) getActivity().findViewById(R.id.ll_eid);
 
 
@@ -155,7 +156,7 @@ public class MosqueTimeTable extends Fragment {
         int counter = 1;
 
 
-        while (counter <= 6) {
+        while (counter <= 7) {
             LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
 
             TextView tv = new TextView(getActivity());
@@ -254,6 +255,16 @@ public class MosqueTimeTable extends Fragment {
                     tv_container.add(tv);
                     ll_container.add(ll_for_ed);
                     setEditTextAndButtonText(mosque.getEsha(), btn_am_pm, temp_ed_container, tv);
+
+                    break;
+                case AppConstant.JUMMAH:
+                    // Log.d("DEBUG",String.valueOf(counter));
+                    //tv.setText(mosque.getJuhar());
+                    ll_jummah.addView(tv);
+                    ll_jummah.addView(ll_for_ed);
+                    tv_container.add(tv);
+                    ll_container.add(ll_for_ed);
+                    setEditTextAndButtonText(mosque.getJummah(), btn_am_pm, temp_ed_container, tv);
 
                     break;
                 case AppConstant.EID:
@@ -394,6 +405,9 @@ public class MosqueTimeTable extends Fragment {
                 case AppConstant.ESHA:
                     mosque.setEsha(hour + ":" + minute);
                     break;
+                case AppConstant.JUMMAH:
+                    mosque.setJummah(hour + ":" + minute);
+                    break;
                 case AppConstant.EID:
                     mosque.setEid(hour + ":" + minute);
                     break;
@@ -401,7 +415,7 @@ public class MosqueTimeTable extends Fragment {
 
         }
 
-        hitUrl(AppConstant.getMosueTimeUpdateUrl(String.valueOf(mosque.getId()), mosque.getFajar(), mosque.getJuhar(), mosque.getAsar(), mosque.getMagrib(), mosque.getEsha(), mosque.getEid()));
+        hitUrl(AppConstant.getMosueTimeUpdateUrl(String.valueOf(mosque.getId()), mosque.getFajar(), mosque.getJuhar(), mosque.getAsar(), mosque.getMagrib(), mosque.getEsha(),mosque.getJummah(), mosque.getEid()));
 
 
     }

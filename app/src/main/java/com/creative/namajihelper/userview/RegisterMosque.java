@@ -278,9 +278,10 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
                 String asar = response.getString("asar");
                 String magrib = response.getString("magrib");
                 String esha = response.getString("esha");
+                String jummah = response.getString("jummah");
                 String eid = response.getString("eid");
 
-                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20", " "), mosqueType, mobileNo, Double.parseDouble(lat), Double.parseDouble(lng), fajar, juhar, asar, magrib, esha, eid,0);
+                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20", " "), mosqueType, mobileNo, Double.parseDouble(lat), Double.parseDouble(lng), fajar, juhar, asar, magrib, esha,jummah, eid,0);
 
                 AppController.getInstance().getPrefManger().setMosqueObject(mosque);
 

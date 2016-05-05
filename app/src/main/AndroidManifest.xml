@@ -101,7 +101,7 @@
 
         /*************************************SEARCH MOSQUE DETAILS ACTIVITY*************************************/
         <activity
-            android:name=".SearchMosqueDetails"
+            android:name=".NamajiMosqueDetails"
             android:label="@string/search_mosque_detals"
             android:screenOrientation="portrait"
             android:parentActivityName=".NamajiSearchResult"

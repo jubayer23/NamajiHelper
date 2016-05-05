@@ -31,7 +31,9 @@ public class AppConstant {
 
     public static final int ESHA = 5;
 
-    public static final int EID = 6;
+    public static final int JUMMAH = 6;
+
+    public static final int EID = 7;
     public static String user_anoymus = "Anoymus";
     public static String defaultRange = "5";
     public static String defaultMaxRange = "10";
@@ -79,7 +81,7 @@ public class AppConstant {
 
     }
 
-    public static String getMosueTimeUpdateUrl(String id, String fajar, String juhar, String asar, String magrib, String esha, String eid) {
+    public static String getMosueTimeUpdateUrl(String id, String fajar, String juhar, String asar, String magrib, String esha,String jummah, String eid) {
         return BaseUrl + "update_time.php?"
                 + "id=" + id
                 + "&fajar=" + fajar
@@ -87,6 +89,7 @@ public class AppConstant {
                 + "&asar=" + asar
                 + "&magrib=" + magrib
                 + "&esha=" + esha
+                + "&jummah=" + jummah
                 + "&eid=" + eid;
     }
 

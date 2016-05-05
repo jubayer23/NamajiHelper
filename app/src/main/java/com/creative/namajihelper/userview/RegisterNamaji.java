@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.namajihelper.MainActivity;
+import com.creative.namajihelper.NamajiHome;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.alertbanner.AlertDialogForAnything;
 import com.creative.namajihelper.appdata.AppConstant;
@@ -249,7 +250,7 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
 
         AppController.getInstance().getPrefManger().setLoginType(AppConstant.LOGIN_TYPE_NAMAJI);
 
-        Intent intent = new Intent(RegisterNamaji.this, MainActivity.class);
+        Intent intent = new Intent(RegisterNamaji.this, NamajiHome.class);
 
         startActivity(intent);
         LoginActivity.LoginActivity.finish();

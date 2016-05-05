@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -89,7 +87,7 @@ public class NamajiSearchResult extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Mosque mosque = mosqueList.get(i);
-                Intent intent = new Intent(NamajiSearchResult.this, SearchMosqueDetails.class);
+                Intent intent = new Intent(NamajiSearchResult.this, NamajiMosqueDetails.class);
                 intent.putExtra(KEY_OBJECT, mosque);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);

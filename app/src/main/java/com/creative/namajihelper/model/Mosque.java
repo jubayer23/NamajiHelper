@@ -20,10 +20,11 @@ public class Mosque implements Comparable,Parcelable{
     String asar;
     String magrib;
     String esha;
+    String jummah;
     String eid;
     float distance;
 
-    public Mosque(int id, String mosqueName, String mosqueType, String mobileNo, double lat, double lng, String fajar, String juhar, String asar, String magrib, String esha, String eid, float distance) {
+    public Mosque(int id, String mosqueName, String mosqueType, String mobileNo, double lat, double lng, String fajar, String juhar, String asar, String magrib, String esha, String jummah, String eid, float distance) {
         this.id = id;
         this.mosqueName = mosqueName;
         this.mosqueType = mosqueType;
@@ -35,6 +36,7 @@ public class Mosque implements Comparable,Parcelable{
         this.asar = asar;
         this.magrib = magrib;
         this.esha = esha;
+        this.jummah = jummah;
         this.eid = eid;
         this.distance = distance;
     }
@@ -51,6 +53,7 @@ public class Mosque implements Comparable,Parcelable{
         asar = in.readString();
         magrib = in.readString();
         esha = in.readString();
+        jummah = in.readString();
         eid = in.readString();
         distance = in.readFloat();
     }
@@ -66,6 +69,14 @@ public class Mosque implements Comparable,Parcelable{
             return new Mosque[size];
         }
     };
+
+    public String getJummah() {
+        return jummah;
+    }
+
+    public void setJummah(String jummah) {
+        this.jummah = jummah;
+    }
 
     public float getDistance() {
         return distance;
@@ -172,7 +183,6 @@ public class Mosque implements Comparable,Parcelable{
         this.eid = eid;
     }
 
-
     @Override
     public String toString() {
         return "Mosque{" +
@@ -187,6 +197,7 @@ public class Mosque implements Comparable,Parcelable{
                 ", asar='" + asar + '\'' +
                 ", magrib='" + magrib + '\'' +
                 ", esha='" + esha + '\'' +
+                ", jummah='" + jummah + '\'' +
                 ", eid='" + eid + '\'' +
                 ", distance=" + distance +
                 '}';
@@ -220,11 +231,13 @@ public class Mosque implements Comparable,Parcelable{
         parcel.writeString(asar);
         parcel.writeString(magrib);
         parcel.writeString(esha);
+        parcel.writeString(jummah);
         parcel.writeString(eid);
         parcel.writeFloat(distance);
     }
 
-   public static class SalaryComparator implements Comparator {
+
+    public static class SalaryComparator implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
             if (!(o1 instanceof Mosque) || !(o2 instanceof Mosque))

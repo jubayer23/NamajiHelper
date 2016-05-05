@@ -4,16 +4,20 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.model.Mosque;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,22 +28,18 @@ public class SearchListAdapterForNextJamat extends BaseAdapter {
     private List<Mosque> Displayedplaces;
     private List<Mosque> Originalplaces;
     private LayoutInflater inflater;
-    Location myLocation;
-    private int current_hour, current_min;
+    private int current_hour, current_min, current_day;
     @SuppressWarnings("unused")
     private Activity activity;
 
-    public SearchListAdapterForNextJamat(Activity activity, List<Mosque> histories, double user_lat, double user_lng) {
+    public SearchListAdapterForNextJamat(Activity activity, List<Mosque> histories) {
         this.activity = activity;
         this.Displayedplaces = histories;
         this.Originalplaces = histories;
 
-        myLocation = new Location("");//provider name is unecessary
-        myLocation.setLatitude(user_lat);//your coords of course
-        myLocation.setLongitude(user_lng);
-
         current_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         current_min = Calendar.getInstance().get(Calendar.MINUTE);
+        current_day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
 
         inflater = (LayoutInflater) activity
@@ -92,100 +92,143 @@ public class SearchListAdapterForNextJamat extends BaseAdapter {
 
         boolean flag_break = false;
         for (int i = 1; i <= 5; i++) {
+           // Log.d("DEBUG","YES");
 
             switch (i) {
                 case 1:
-
                     String time_Fajar[] = mosque.getFajar().split(":");
-                    int Fajar_h = Integer.parseInt(time_Fajar[0]);
-                    int Fajar_m = Integer.parseInt(time_Fajar[1]);
+                    int Fajar_h = Integer.parseInt(time_Fajar[0].replaceAll("\\s+", ""));
+                    int Fajar_m = Integer.parseInt(time_Fajar[1].replaceAll("\\s+", ""));
                     if (current_hour < Fajar_h) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Fajar " + mosque.getFajar());
+                        viewHolder.mosqueNextJamat.setText("Fajar " + getTimeStringInFormated(mosque.getFajar()));
                     } else if (current_hour == Fajar_h && current_min < Fajar_m) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Fajar " + mosque.getFajar());
+                        viewHolder.mosqueNextJamat.setText("Fajar " + getTimeStringInFormated(mosque.getFajar()));
                     }
 
                     break;
                 case 2:
 
-                    String time_Juhar[] = mosque.getJuhar().split(":");
-                    int Juhar_h = Integer.parseInt(time_Juhar[0]);
-                    int Juhar_m = Integer.parseInt(time_Juhar[1]);
-                    if (current_hour < Juhar_h) {
-                        flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Juhar " + mosque.getJuhar());
-                    } else if (current_hour == Juhar_h && current_min < Juhar_m) {
-                        flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Juhar " + mosque.getJuhar());
+
+                    if (current_day == Calendar.FRIDAY) {
+                        String time_Jummah[] = mosque.getEsha().split(":");
+                        int Jummah_h = Integer.parseInt(time_Jummah[0].replaceAll("\\s+", ""));
+                        int Jummah_m = Integer.parseInt(time_Jummah[1].replaceAll("\\s+", ""));
+                        if (current_hour < Jummah_h) {
+                            flag_break = true;
+                            viewHolder.mosqueNextJamat.setText("Jummah " + getTimeStringInFormated(mosque.getJummah()));
+                        } else if (current_hour == Jummah_h && current_min < Jummah_m) {
+                            flag_break = true;
+                            viewHolder.mosqueNextJamat.setText("Jummah " + getTimeStringInFormated(mosque.getJummah()));
+                        }
+
+                    } else {
+                        String time_Juhar[] = mosque.getJuhar().split(":");
+                        int Juhar_h = Integer.parseInt(time_Juhar[0].replaceAll("\\s+", ""));
+                        int Juhar_m = Integer.parseInt(time_Juhar[1].replaceAll("\\s+", ""));
+                        if (current_hour < Juhar_h) {
+                            flag_break = true;
+                            viewHolder.mosqueNextJamat.setText("Juhar " + getTimeStringInFormated(mosque.getJuhar()));
+                        } else if (current_hour == Juhar_h && current_min < Juhar_m) {
+                            flag_break = true;
+                            viewHolder.mosqueNextJamat.setText("Juhar " + getTimeStringInFormated(mosque.getJuhar()));
+                        }
                     }
+
 
                     break;
                 case 3:
                     String time_Asar[] = mosque.getAsar().split(":");
-                    int Asar_h = Integer.parseInt(time_Asar[0]);
-                    int Asar_m = Integer.parseInt(time_Asar[1]);
+                    int Asar_h = Integer.parseInt(time_Asar[0].replaceAll("\\s+", ""));
+                    int Asar_m = Integer.parseInt(time_Asar[1].replaceAll("\\s+", ""));
                     if (current_hour < Asar_h) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Asar " + mosque.getAsar());
+                        viewHolder.mosqueNextJamat.setText("Asar " + getTimeStringInFormated(mosque.getAsar()));
                     } else if (current_hour == Asar_h && current_min < Asar_m) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Asar " + mosque.getAsar());
+                        viewHolder.mosqueNextJamat.setText("Asar " + getTimeStringInFormated(mosque.getAsar()));
                     }
                     break;
                 case 4:
 
                     String time_Magrib[] = mosque.getMagrib().split(":");
-                    int Magrib_h = Integer.parseInt(time_Magrib[0]);
-                    int Magrib_m = Integer.parseInt(time_Magrib[1]);
+                    int Magrib_h = Integer.parseInt(time_Magrib[0].replaceAll("\\s+", ""));
+                    int Magrib_m = Integer.parseInt(time_Magrib[1].replaceAll("\\s+", ""));
                     if (current_hour < Magrib_h) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Magrib " + mosque.getMagrib());
+                        viewHolder.mosqueNextJamat.setText("Magrib " + getTimeStringInFormated(mosque.getMagrib()));
                     } else if (current_hour == Magrib_h && current_min < Magrib_m) {
                         flag_break = true;
-                        viewHolder.mosqueNextJamat.setText("Magrib " + mosque.getMagrib());
+                        viewHolder.mosqueNextJamat.setText("Magrib " + getTimeStringInFormated(mosque.getMagrib()));
                     }
 
                     break;
                 case 5:
 
                     String time_Esha[] = mosque.getEsha().split(":");
-                    int Esha_h = Integer.parseInt(time_Esha[0]);
-                    int Esha_m = Integer.parseInt(time_Esha[1]);
+                    int Esha_h = Integer.parseInt(time_Esha[0].replaceAll("\\s+", ""));
+                    int Esha_m = Integer.parseInt(time_Esha[1].replaceAll("\\s+", ""));
                     if (current_hour < Esha_h) {
-                        viewHolder.mosqueNextJamat.setText("Esha " + mosque.getEsha());
+                        flag_break = true;
+                        viewHolder.mosqueNextJamat.setText("Esha " + getTimeStringInFormated(mosque.getEsha()));
                     } else if (current_hour == Esha_h && current_min < Esha_m) {
-                        viewHolder.mosqueNextJamat.setText("Esha " + mosque.getEsha());
+                        flag_break = true;
+                        viewHolder.mosqueNextJamat.setText("Esha " + getTimeStringInFormated(mosque.getEsha()));
                     }
 
                     break;
+
             }
             if (flag_break) break;
         }
         if (!flag_break) {
 
-            viewHolder.mosqueNextJamat.setText("Fajar " + mosque.getFajar());
+            viewHolder.mosqueNextJamat.setText("Fajar " + getTimeStringInFormated(mosque.getFajar()));
         }
 
-        Location targetLocation = new Location("");//provider name is unecessary
-        targetLocation.setLatitude(mosque.getLat());//your coords of course
-        targetLocation.setLongitude(mosque.getLng());
+        if (mosque.getDistance() != -9999) {
+            if (mosque.getDistance() > 999) {
+                float distanceInKm = mosque.getDistance() / 1000;
+                viewHolder.distance.setText(String.format("%.1f", distanceInKm) + " " + activity.getResources().getString(R.string.km));
+            } else {
+                viewHolder.distance.setText(String.format("%.1f", mosque.getDistance()) + " " + activity.getResources().getString(R.string.miters));
+            }
 
-        int distanceInMeters = (int) myLocation.distanceTo(targetLocation);
-
-        //Log.d("DEBUG",String.valueOf(distanceInMeters));
-
-        if (String.valueOf(distanceInMeters).length() > 3) {
-            float distanceInKm = distanceInMeters / 1000;
-
-            viewHolder.distance.setText(String.format("%.1f", distanceInKm) + " " + activity.getResources().getString(R.string.km));
         } else {
-            viewHolder.distance.setText(String.valueOf(distanceInMeters) + " " + activity.getResources().getString(R.string.miters));
+            viewHolder.distance.setVisibility(View.GONE);
         }
 
 
         return convertView;
+    }
+
+    private String getTimeStringInFormated(String namaji_time) {
+        String time_text = "",amOrPm="AM";
+        String b[] = namaji_time.split(":");
+        for (int i = 0; i < b.length; i++) {
+
+            b[i] = b[i].replaceAll("\\s+", "");
+            if (i == 0) {
+                int hour = Integer.parseInt(b[i]);
+
+                if (hour > 12) {
+                    amOrPm = "PM";
+                    time_text = time_text + String.valueOf(hour - 12);
+                } else {
+                    amOrPm = "AM";
+                    time_text = time_text + b[i];
+                }
+            } else {
+
+                time_text = time_text + " : " + b[i] + " " + amOrPm;
+            }
+
+
+        }
+        Log.d("DEBUG",time_text);
+        return time_text;
+
     }
 
     public void addMore() {

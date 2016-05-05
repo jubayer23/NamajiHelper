@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.creative.namajihelper.NamajiSearchResult;
 import com.creative.namajihelper.R;
-import com.creative.namajihelper.SearchMosqueDetails;
+import com.creative.namajihelper.NamajiMosqueDetails;
 import com.creative.namajihelper.adapter.FavListAdapter;
 import com.creative.namajihelper.appdata.AppController;
 import com.creative.namajihelper.model.Mosque;
@@ -73,7 +73,7 @@ public class NamajiFavMosque extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Mosque mosque = favMosqueList.get(i);
-                Intent intent = new Intent(getActivity(), SearchMosqueDetails.class);
+                Intent intent = new Intent(getActivity(), NamajiMosqueDetails.class);
                 intent.putExtra(NamajiSearchResult.KEY_OBJECT, mosque);
                 startActivity(intent);
             }

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 /**
  * Created by comsol on 29-Apr-16.
  */
-public class SearchMosqueDetails extends AppCompatActivity {
+public class NamajiMosqueDetails extends AppCompatActivity {
 
-    TextView tv_fajar, tv_juhar, tv_asar, tv_magrib, tv_esha, tv_eid, tv_mosque_name;
+    TextView tv_fajar, tv_juhar, tv_asar, tv_magrib, tv_esha,tv_jummah, tv_eid, tv_mosque_name;
 
     Mosque mosque;
 
@@ -110,6 +110,8 @@ public class SearchMosqueDetails extends AppCompatActivity {
         setText(mosque.getMagrib(), tv_magrib);
         tv_esha = (TextView) findViewById(R.id.esha);
         setText(mosque.getEsha(), tv_esha);
+        tv_jummah = (TextView) findViewById(R.id.jummah);
+        setText(mosque.getJummah(), tv_jummah);
         tv_eid = (TextView) findViewById(R.id.eid);
         setText(mosque.getEid(), tv_eid);
 

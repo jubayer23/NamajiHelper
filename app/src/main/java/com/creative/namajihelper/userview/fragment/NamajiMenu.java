@@ -8,24 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.creative.namajihelper.AboutUs;
 import com.creative.namajihelper.NamajiHome;
-import com.creative.namajihelper.NamajiSearchResult;
 import com.creative.namajihelper.R;
-import com.creative.namajihelper.SearchMosqueDetails;
-import com.creative.namajihelper.adapter.SearchListAdapter;
 import com.creative.namajihelper.appdata.AppConstant;
 import com.creative.namajihelper.appdata.AppController;
-import com.creative.namajihelper.model.Mosque;
 import com.creative.namajihelper.model.Namaji;
 import com.creative.namajihelper.userview.LoginActivity;
 import com.creative.namajihelper.utils.GPSTracker;
-
-import java.util.ArrayList;
 
 /**
  * Created by comsol on 24-Apr-16.
