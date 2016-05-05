@@ -4,13 +4,34 @@
     android:background="@drawable/background"
     android:layout_height="match_parent">
 
+
+    <EditText
+        android:id="@+id/ed_mosque_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:imeOptions="actionSearch"
+        android:layout_margin="10dp"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:background="@drawable/rounded_edittext"/>
+
     <ListView
         android:id="@+id/list_search"
         android:layout_width="match_parent"
         android:dividerHeight="2dp"
+        android:layout_below="@+id/ed_mosque_name"
         android:footerDividersEnabled="true"
         android:layout_height="wrap_content">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_mosque_name"
+        android:text="No Data Found"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"/>
 
 </RelativeLayout>

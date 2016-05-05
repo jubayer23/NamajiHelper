@@ -3,10 +3,12 @@ package com.creative.namajihelper.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+
 /**
  * Created by comsol on 20-Apr-16.
  */
-public class Mosque implements Parcelable{
+public class Mosque implements Comparable,Parcelable{
     int id;
     String mosqueName;
     String mosqueType;
@@ -19,7 +21,9 @@ public class Mosque implements Parcelable{
     String magrib;
     String esha;
     String eid;
-    public Mosque(int id, String mosqueName, String mosqueType, String mobileNo, double lat, double lng, String fajar, String juhar, String asar, String magrib, String esha, String eid) {
+    float distance;
+
+    public Mosque(int id, String mosqueName, String mosqueType, String mobileNo, double lat, double lng, String fajar, String juhar, String asar, String magrib, String esha, String eid, float distance) {
         this.id = id;
         this.mosqueName = mosqueName;
         this.mosqueType = mosqueType;
@@ -32,6 +36,7 @@ public class Mosque implements Parcelable{
         this.magrib = magrib;
         this.esha = esha;
         this.eid = eid;
+        this.distance = distance;
     }
 
     protected Mosque(Parcel in) {
@@ -47,6 +52,7 @@ public class Mosque implements Parcelable{
         magrib = in.readString();
         esha = in.readString();
         eid = in.readString();
+        distance = in.readFloat();
     }
 
     public static final Creator<Mosque> CREATOR = new Creator<Mosque>() {
@@ -60,6 +66,14 @@ public class Mosque implements Parcelable{
             return new Mosque[size];
         }
     };
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 
     public int getId() {
         return id;
@@ -158,6 +172,36 @@ public class Mosque implements Parcelable{
         this.eid = eid;
     }
 
+
+    @Override
+    public String toString() {
+        return "Mosque{" +
+                "id=" + id +
+                ", mosqueName='" + mosqueName + '\'' +
+                ", mosqueType='" + mosqueType + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", fajar='" + fajar + '\'' +
+                ", juhar='" + juhar + '\'' +
+                ", asar='" + asar + '\'' +
+                ", magrib='" + magrib + '\'' +
+                ", esha='" + esha + '\'' +
+                ", eid='" + eid + '\'' +
+                ", distance=" + distance +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (!(o instanceof Mosque))
+            throw new ClassCastException();
+
+        Mosque e = (Mosque) o;
+
+        return mosqueName.compareTo(e.getMosqueName());
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -177,5 +221,19 @@ public class Mosque implements Parcelable{
         parcel.writeString(magrib);
         parcel.writeString(esha);
         parcel.writeString(eid);
+        parcel.writeFloat(distance);
+    }
+
+   public static class SalaryComparator implements Comparator {
+        @Override
+        public int compare(Object o1, Object o2) {
+            if (!(o1 instanceof Mosque) || !(o2 instanceof Mosque))
+                throw new ClassCastException();
+
+            Mosque e1 = (Mosque) o1;
+            Mosque e2 = (Mosque) o2;
+
+            return (int) (e1.getDistance() - e2.getDistance());
+        }
     }
 }

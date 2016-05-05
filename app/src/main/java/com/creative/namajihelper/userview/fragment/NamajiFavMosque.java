@@ -9,18 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
-import com.creative.namajihelper.MosqueHome;
-import com.creative.namajihelper.NamajiHome;
 import com.creative.namajihelper.NamajiSearchResult;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.SearchMosqueDetails;
-import com.creative.namajihelper.adapter.SearchListAdapter;
+import com.creative.namajihelper.adapter.FavListAdapter;
 import com.creative.namajihelper.appdata.AppController;
 import com.creative.namajihelper.model.Mosque;
-import com.creative.namajihelper.userview.LoginActivity;
 import com.creative.namajihelper.utils.GPSTracker;
 
 import java.util.ArrayList;
@@ -40,7 +36,7 @@ public class NamajiFavMosque extends Fragment {
 
     GPSTracker gps;
 
-    SearchListAdapter searchListAdapter;
+    FavListAdapter favListAdapter;
 
     public static NamajiFavMosque newInstance(int page) {
         Bundle args = new Bundle();
@@ -98,11 +94,11 @@ public class NamajiFavMosque extends Fragment {
         favMosqueList = AppController.getInstance().getPrefManger().getFavPlaces();
 
         if (gps.canGetLocation()) {
-            searchListAdapter = new SearchListAdapter(getActivity(), favMosqueList, gps.getLatitude(), gps.getLongitude());
-            listView.setAdapter(searchListAdapter);
+            favListAdapter = new FavListAdapter(getActivity(), favMosqueList, gps.getLatitude(), gps.getLongitude());
+            listView.setAdapter(favListAdapter);
         } else {
-            searchListAdapter = new SearchListAdapter(getActivity(), favMosqueList, 0, 0);
-            listView.setAdapter(searchListAdapter);
+            favListAdapter = new FavListAdapter(getActivity(), favMosqueList, 0, 0);
+            listView.setAdapter(favListAdapter);
         }
 
     }

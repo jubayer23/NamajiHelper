@@ -8,15 +8,15 @@
         android:id="@+id/salat_logo"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="45dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/salat_logo"/>
+        android:layout_marginTop="45dp"
+        android:src="@drawable/salat_logo" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,6 +99,19 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_skip"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_login_selector"
+        android:text="SKIP"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

@@ -28,10 +28,10 @@ public class MosqueHome extends AppCompatActivity {
 
         mosqueHomeActivity = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.mosque_home_activity);
-        getSupportActionBar().setIcon(R.mipmap.logo);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       // setSupportActionBar(toolbar);
+       // getSupportActionBar().setTitle(R.string.mosque_home_activity);
+       // getSupportActionBar().setIcon(R.mipmap.logo);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -43,36 +43,6 @@ public class MosqueHome extends AppCompatActivity {
         tabsStrip.setViewPager(viewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_about) {
-            return true;
-        }
-        if (id == R.id.action_logout) {
-            AppController.getInstance().getPrefManger().setLoginType("");
-            Intent intent = new Intent(MosqueHome.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }

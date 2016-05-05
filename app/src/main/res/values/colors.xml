@@ -37,6 +37,8 @@
     <color name="green">#f61f9b0c</color>
     <color name="green_light">#15F797</color>
 
+    <color name="red">#e60b45</color>
+
     <!--for seekBar-->
     <color name="default_screen_bg">#f9f9f9</color>
     <color name="rounded_container_bg">#222222</color>

@@ -47,7 +47,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
 
     Button signUp;
 
-    EditText mosqueName_ed, mobileNo_ed, password_ed;
+    EditText mosqueName_ed, mobileNo_ed, password_ed, password_reenter_ed;
 
     RelativeLayout locationChange, location_details_rl;
 
@@ -103,13 +103,19 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
                     boolean checkWarn = showWarningDialog();
                     if (checkWarn && !lat.isEmpty() && !lng.isEmpty()) {
 
-                        mosqueName = mosqueName_ed.getText().toString().trim();
-                        mosqueName = mosqueName.replaceAll(" ", "%20");
-                        mobileNo = mobileNo_ed.getText().toString().trim();
-                        password = password_ed.getText().toString().trim();
+                        if (isBothPasswordSame()) {
+                            mosqueName = mosqueName_ed.getText().toString().trim();
+                            mosqueName = mosqueName.replaceAll(" ", "%20");
+                            mobileNo = mobileNo_ed.getText().toString().trim();
+                            password = password_ed.getText().toString().trim();
 
-                        sendRequestToServer(AppConstant.getMosqueRegisterUrl(mosqueName, mosqueType, mobileNo, password, lat, lng));
+                            sendRequestToServer(AppConstant.getMosqueRegisterUrl(mosqueName, mosqueType, mobileNo, password, lat, lng));
 
+                        }
+
+
+                    } else if (lat.isEmpty() && lng.isEmpty()) {
+                        locationChange.setBackgroundResource(R.drawable.rounded_edittext_red);
                     }
                 } else {
                     checkDeviceConfig.showAlertDialogToNetworkConnection(RegisterMosque.this, "No Internet Connection",
@@ -137,6 +143,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
         mosqueName_ed = (EditText) findViewById(R.id.mosquename_ed);
         mobileNo_ed = (EditText) findViewById(R.id.mobileno_ed);
         password_ed = (EditText) findViewById(R.id.password_ed);
+        password_reenter_ed = (EditText) findViewById(R.id.password_reenter_ed);
 
         locationChange = (RelativeLayout) findViewById(R.id.change_location);
         locationChange.setOnClickListener(this);
@@ -180,6 +187,13 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
             password_ed.setError(null);
         }
 
+        if (password_reenter_ed.getText().toString().isEmpty()) {
+            password_reenter_ed.setError("Enter password");
+            valid = false;
+        } else {
+            password_reenter_ed.setError(null);
+        }
+
         if (mosqueName_ed.getText().toString().isEmpty() || mobileNo_ed.getText().toString().isEmpty() || password_ed.getText().toString().isEmpty()) {
             if (mosqueName_ed.getText().toString().isEmpty() && !mobileNo_ed.getText().toString().isEmpty() && !password_ed.getText().toString().isEmpty()) {
                 mosqueName_ed.requestFocus();
@@ -195,6 +209,16 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
         }
 
         return valid;
+    }
+
+    private boolean isBothPasswordSame() {
+        if (password_ed.getText().toString().equals(password_reenter_ed.getText().toString())) {
+            return true;
+        } else {
+            password_reenter_ed.setError("PassWord Does Not Match");
+            password_reenter_ed.requestFocus();
+            return false;
+        }
     }
 
     public void sendRequestToServer(String url_all_products) {
@@ -256,7 +280,7 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
                 String esha = response.getString("esha");
                 String eid = response.getString("eid");
 
-                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20", " "), mosqueType, mobileNo, Double.parseDouble(lat), Double.parseDouble(lng), fajar, juhar, asar, magrib, esha, eid);
+                Mosque mosque = new Mosque(id, mosqueName.replaceAll("%20", " "), mosqueType, mobileNo, Double.parseDouble(lat), Double.parseDouble(lng), fajar, juhar, asar, magrib, esha, eid,0);
 
                 AppController.getInstance().getPrefManger().setMosqueObject(mosque);
 
@@ -365,6 +389,9 @@ public class RegisterMosque extends AppCompatActivity implements View.OnClickLis
 
         if (requestCode == PLACE_PICKER_REQUEST
                 && resultCode == Activity.RESULT_OK) {
+
+            locationChange.setBackgroundResource(R.drawable.rounded_edittext);
+
             final Place place = PlacePicker.getPlace(data, this);
             location_details_rl.setVisibility(View.VISIBLE);
             // Log.d("DEBUG",place.getName() + " " +place.getAddress() + " " + place.getLocale());

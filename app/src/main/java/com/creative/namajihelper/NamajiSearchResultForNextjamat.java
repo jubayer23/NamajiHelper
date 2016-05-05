@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.namajihelper.adapter.SearchListAdapter;
+import com.creative.namajihelper.adapter.SearchListAdapterForNextJamat;
 import com.creative.namajihelper.appdata.AppConstant;
 import com.creative.namajihelper.appdata.AppController;
 import com.creative.namajihelper.model.Mosque;
@@ -29,16 +29,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by comsol on 28-Apr-16.
  */
 
 
-public class NamajiSearchResult extends AppCompatActivity {
+public class NamajiSearchResultForNextjamat extends AppCompatActivity {
 
     ListView listView;
 
@@ -49,8 +47,9 @@ public class NamajiSearchResult extends AppCompatActivity {
 
     Gson gson;
 
-    SearchListAdapter searchListAdapter;
+    SearchListAdapterForNextJamat searchListAdapter;
 
+    double lat, lng;
 
     EditText ed_mosque_name;
 
@@ -67,48 +66,27 @@ public class NamajiSearchResult extends AppCompatActivity {
 
         init();
 
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
 
 
-        //lat = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LAT));
-        //lng = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LNG));
+        lat = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LAT));
+        lng = Double.parseDouble(intent.getStringExtra(NamajiSearch.KEY_LNG));
 
 
-        if (intent.getStringExtra(NamajiSearch.KEY_SEARCH_TYPE).equalsIgnoreCase(NamajiSearch.BY_NAME)) {
-            ed_mosque_name.setVisibility(View.VISIBLE);
-            sendRequestToServer(AppConstant.getSearchByNameUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_NAME), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG)));
-
-        } else {
-
-            sendRequestToServer(AppConstant.getNeabyMosqueUrl(intent.getStringExtra(NamajiSearch.KEY_MOSQUE_TYPE), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), intent.getStringExtra(NamajiSearch.KEY_RANGE)));
-
-        }
+        sendRequestToServer(AppConstant.getNeabyMosqueUrl("all", intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG), AppConstant.defaultMaxRange));
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Mosque mosque = mosqueList.get(i);
-                Intent intent = new Intent(NamajiSearchResult.this, SearchMosqueDetails.class);
+                Intent intent = new Intent(NamajiSearchResultForNextjamat.this, SearchMosqueDetails.class);
                 intent.putExtra(KEY_OBJECT, mosque);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
 
-        ed_mosque_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (!ed_mosque_name.getText().toString().isEmpty()) {
-                        searchListAdapter = null;
-                        sendRequestToServer(AppConstant.getSearchByNameUrl(ed_mosque_name.getText().toString().replaceAll(" ", "%20"), intent.getStringExtra(NamajiSearch.KEY_LAT), intent.getStringExtra(NamajiSearch.KEY_LNG)));
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     private void init() {
@@ -126,7 +104,7 @@ public class NamajiSearchResult extends AppCompatActivity {
         tv_no_data = (TextView) findViewById(R.id.tv_no_data);
         tv_no_data.setVisibility(View.GONE);
 
-        progressDialog = new ProgressDialog(NamajiSearchResult.this);
+        progressDialog = new ProgressDialog(NamajiSearchResultForNextjamat.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Login...");
 
@@ -145,8 +123,6 @@ public class NamajiSearchResult extends AppCompatActivity {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        //Log.d("DEBUG",response);
 
                         try {
 
@@ -190,15 +166,11 @@ public class NamajiSearchResult extends AppCompatActivity {
 
             }
 
-
-            Collections.sort(mosqueList, new Mosque.SalaryComparator());
-
-
             if (searchListAdapter == null && !mosqueList.isEmpty()) {
                 listView.setVisibility(View.VISIBLE);
                 tv_no_data.setVisibility(View.GONE);
-                searchListAdapter = new SearchListAdapter(
-                        NamajiSearchResult.this, mosqueList);
+                searchListAdapter = new SearchListAdapterForNextJamat(
+                        NamajiSearchResultForNextjamat.this, mosqueList, lat, lng);
                 listView.setAdapter(searchListAdapter);
 
             } else {

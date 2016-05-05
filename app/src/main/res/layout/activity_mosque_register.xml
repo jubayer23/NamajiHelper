@@ -111,6 +111,26 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <!--  Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password_reenter_ed"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="ReType Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black">
+
+            </EditText>
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <RelativeLayout
             android:id="@+id/location_details_rl"

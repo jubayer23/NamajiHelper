@@ -1,5 +1,4 @@
 package com.creative.namajihelper.adapter;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -18,18 +17,28 @@ import java.util.List;
 
 
 @SuppressLint("DefaultLocale")
-public class SearchListAdapter extends BaseAdapter {
+public class FavListAdapter extends BaseAdapter {
 
     private List<Mosque> Displayedplaces;
     private List<Mosque> Originalplaces;
     private LayoutInflater inflater;
+    Location myLocation;
     @SuppressWarnings("unused")
     private Activity activity;
+    private boolean FLAG_DISTANCE_AVAILABLE = true;
 
-    public SearchListAdapter(Activity activity, List<Mosque> histories) {
+    public FavListAdapter(Activity activity, List<Mosque> histories, double user_lat, double user_lng) {
         this.activity = activity;
         this.Displayedplaces = histories;
         this.Originalplaces = histories;
+        if (user_lat == 0 && user_lng == 0) {
+            FLAG_DISTANCE_AVAILABLE = false;
+        } else {
+            FLAG_DISTANCE_AVAILABLE = true;
+            myLocation = new Location("");//provider name is unecessary
+            myLocation.setLatitude(user_lat);//your coords of course
+            myLocation.setLongitude(user_lng);
+        }
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -76,17 +85,27 @@ public class SearchListAdapter extends BaseAdapter {
 
         viewHolder.mosqueName.setText(mosque.getMosqueName());
 
-        if(mosque.getDistance() != -9999)
-        {
-            if(mosque.getDistance() > 999){
-                float distanceInKm = mosque.getDistance() / 1000;
+        if (FLAG_DISTANCE_AVAILABLE) {
+            Location targetLocation = new Location("");//provider name is unecessary
+            targetLocation.setLatitude(mosque.getLat());//your coords of course
+            targetLocation.setLongitude(mosque.getLng());
+
+            int distanceInMeters = (int) myLocation.distanceTo(targetLocation);
+
+            //Log.d("DEBUG",String.valueOf(distanceInMeters));
+
+            if(String.valueOf(distanceInMeters).length() > 3)
+            {
+                float distanceInKm = distanceInMeters / 1000;
+
                 viewHolder.distance.setText(String.format("%.1f", distanceInKm) + " " + activity.getResources().getString(R.string.km));
-            }else{
-                viewHolder.distance.setText(String.format("%.1f", mosque.getDistance()) + " " + activity.getResources().getString(R.string.miters));
+            }else
+            {
+                viewHolder.distance.setText(String.valueOf(distanceInMeters) + " " +activity.getResources().getString(R.string.miters));
             }
 
-        }else
-        {
+
+        } else {
             viewHolder.distance.setVisibility(View.GONE);
         }
 

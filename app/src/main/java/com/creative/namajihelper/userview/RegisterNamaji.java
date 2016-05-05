@@ -31,7 +31,7 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
 
     Button signUp;
 
-    EditText namajiName_ed, mobileNo_ed, password_ed;
+    EditText namajiName_ed, mobileNo_ed, password_ed,password_ed_2;
 
 
     CheckDeviceConfig checkDeviceConfig;
@@ -59,12 +59,17 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
                     boolean checkWarn = showWarningDialog();
                     if (checkWarn) {
 
-                        namajiName = namajiName_ed.getText().toString().trim();
-                        namajiName = namajiName.replaceAll(" ", "%20");
-                        mobileNo = mobileNo_ed.getText().toString().trim();
-                        password = password_ed.getText().toString().trim();
+                        if(isBothPasswordSame())
+                        {
+                            namajiName = namajiName_ed.getText().toString().trim();
+                            namajiName = namajiName.replaceAll(" ", "%20");
+                            mobileNo = mobileNo_ed.getText().toString().trim();
+                            password = password_ed.getText().toString().trim();
 
-                        sendRequestToServer(AppConstant.getNamajiRegisterUrl(namajiName, mobileNo, password));
+                            sendRequestToServer(AppConstant.getNamajiRegisterUrl(namajiName, mobileNo, password));
+
+                        }
+
 
                     }
                 } else {
@@ -85,6 +90,7 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
         namajiName_ed = (EditText) findViewById(R.id.namajiname_ed);
         mobileNo_ed = (EditText) findViewById(R.id.mobileno_ed);
         password_ed = (EditText) findViewById(R.id.password_ed);
+        password_ed_2 = (EditText) findViewById(R.id.password_ed_2);
 
 
         signUp = (Button) findViewById(R.id.btn_signup);
@@ -120,6 +126,12 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
         } else {
             password_ed.setError(null);
         }
+        if (password_ed_2.getText().toString().isEmpty()) {
+            password_ed_2.setError("Enter password");
+            valid = false;
+        } else {
+            password_ed_2.setError(null);
+        }
 
         if (namajiName_ed.getText().toString().isEmpty() && mobileNo_ed.getText().toString().isEmpty() && password_ed.getText().toString().isEmpty()) {
             namajiName_ed.requestFocus();
@@ -136,6 +148,16 @@ public class RegisterNamaji extends AppCompatActivity implements View.OnClickLis
         }
 
         return valid;
+    }
+
+    private boolean isBothPasswordSame() {
+        if (password_ed.getText().toString().equals(password_ed_2.getText().toString())) {
+            return true;
+        } else {
+            password_ed_2.setError("PassWord Does Not Match");
+            password_ed_2.requestFocus();
+            return false;
+        }
     }
 
     public void sendRequestToServer(String url_all_products) {

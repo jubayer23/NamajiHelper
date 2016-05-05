@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     String mobileNo;
     String password;
 
-    Button loginB;
+    Button loginB,btn_skip;
     EditText mobileNoEd, passwordEd;
     TextView registerUser;
     //SqliteDb theDb;
@@ -116,6 +116,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
+
         registerUser.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -124,6 +126,23 @@ public class LoginActivity extends AppCompatActivity {
                 // Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 // startActivity(signUpIntent);
                 showSettingDialog();
+            }
+        });
+
+
+        btn_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Namaji namajiObj = new Namaji(0,AppConstant.user_anoymus,"0000");
+                AppController.getInstance().getPrefManger().setNamajiObject(namajiObj);
+
+                Intent intent = new Intent(LoginActivity.this, NamajiHome.class);
+
+                startActivity(intent);
+
+
+
             }
         });
     }
@@ -149,6 +168,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordEd = (EditText) findViewById(R.id.pasword_ed);
 
         registerUser = (TextView) findViewById(R.id.btn_signup);
+
+        btn_skip = (Button)findViewById(R.id.btn_skip);
 
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setIndeterminate(true);
@@ -257,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
                     String esha = response.getString("esha");
                     String eid = response.getString("eid");
 
-                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha, eid);
+                    Mosque mosqueObj = new Mosque(id, mosqueName, mosqueType, mobileNo, lat, lng, fajar, juhar, asar, magrib, esha, eid,0);
                     AppController.getInstance().getPrefManger().setMosqueObject(mosqueObj);
 
                 }

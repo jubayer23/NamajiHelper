@@ -32,6 +32,9 @@ public class AppConstant {
     public static final int ESHA = 5;
 
     public static final int EID = 6;
+    public static String user_anoymus = "Anoymus";
+    public static String defaultRange = "5";
+    public static String defaultMaxRange = "10";
 
 
     public static String getUserRegUrl(String username, String email, String password) {
@@ -96,9 +99,11 @@ public class AppConstant {
 
     }
 
-    public static String getSearchByNameUrl(String mosque_name) {
+    public static String getSearchByNameUrl(String mosque_name, String lat, String lng) {
         return BaseUrl + "searchby_name.php?"
-                + "mosque_name=" + mosque_name;
+                + "mosque_name=" + mosque_name
+                + "&lat=" + lat
+                + "&lng=" + lng;
 
     }
 

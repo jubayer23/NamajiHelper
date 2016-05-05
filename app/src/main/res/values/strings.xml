@@ -30,5 +30,13 @@
     <string name="all">All</string>
     <string name="distanceUnit">km</string>
     <string name="km">km</string>
-    <string name="miters">miters</string>
+    <string name="miters">meters</string>
+    <string name="alertGps">Gps Disabled!!</string>
+    <string name="alertMessageGps">Please Enable Gps</string>
+    <string name="aboutus">Bismullah ir-Rahman it-Rahim\n\n\n\n
+
+May Allah bless the Prophet and his companions for each of the namaz observed and prayed because of this application, and may he further rewaed and bless the Ummah, my parents (Sunhera and Salim Kaliwala), my grandparents (Mumtaz and Usman Kaliwala) (Abeda and Yusuf Bagasrawala), my deceased cousin (Aamir Bagasrawala) and the developer (Jubayer) who made this appliaction a possiblity in real term!\n\n\n\n
+
+For any recommendation or changes, contact me on kaliwalasarfaraz@gmail.com or +91-9879151617</string>
+    <string name="about_us">About Us</string>
 </resources>

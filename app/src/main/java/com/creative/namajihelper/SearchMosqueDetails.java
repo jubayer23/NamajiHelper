@@ -2,6 +2,7 @@ package com.creative.namajihelper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,8 @@ public class SearchMosqueDetails extends AppCompatActivity {
 
     int fav_mosque_index_in_arraylist = 0;
 
+    Button btn_show_direction;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +60,26 @@ public class SearchMosqueDetails extends AppCompatActivity {
                     showAlertDialog();
 
                 } else {
+                    FLAG_ALREADY_FAV = true;
                     img_fav.setImageResource(R.drawable.fav_yes);
                     favMosqueList.add(mosque);
+                    fav_mosque_index_in_arraylist = favMosqueList.size() - 1;
                     AppController.getInstance().getPrefManger().setFavPlaces(favMosqueList);
                 }
 
 
+            }
+        });
+
+        btn_show_direction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="
+                        + String.valueOf(mosque.getLat()) + ","
+                        + String.valueOf(mosque.getLng()));
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
     }
@@ -100,6 +117,8 @@ public class SearchMosqueDetails extends AppCompatActivity {
         img_fav = (ImageView) findViewById(R.id.img_fav);
         if (FLAG_ALREADY_FAV) img_fav.setImageResource(R.drawable.fav_yes);
         else img_fav.setImageResource(R.drawable.fav_no);
+
+        btn_show_direction = (Button) findViewById(R.id.btn_show_direction);
 
     }
 
@@ -162,6 +181,7 @@ public class SearchMosqueDetails extends AppCompatActivity {
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
+                FLAG_ALREADY_FAV = false;
                 // Do nothing but close the dialog
                 img_fav.setImageResource(R.drawable.fav_no);
                 favMosqueList.remove(fav_mosque_index_in_arraylist);

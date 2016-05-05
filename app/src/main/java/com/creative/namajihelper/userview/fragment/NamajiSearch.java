@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.creative.namajihelper.NamajiSearchResult;
+import com.creative.namajihelper.NamajiSearchResultForNextjamat;
 import com.creative.namajihelper.R;
 import com.creative.namajihelper.alertbanner.AlertDialogForAnything;
 import com.creative.namajihelper.appdata.AppConstant;
@@ -39,7 +40,7 @@ public class NamajiSearch extends Fragment {
 
     private int mPage;
 
-    Button btn_neaby_mosque,btn_searchby_name;
+    Button btn_neaby_mosque, btn_searchby_name, btn_searchby_nextjamat;
 
     TextView tv_welcomeNote;
 
@@ -93,7 +94,7 @@ public class NamajiSearch extends Fragment {
                     showSettingDialog();
 
                 } else {
-                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(), "Gps Disabled", "Please Enable Gps", false);
+                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(), getResources().getString(R.string.alertGps), getResources().getString(R.string.alertMessageGps), false);
                 }
 
             }
@@ -104,11 +105,34 @@ public class NamajiSearch extends Fragment {
                 gps = new GPSTracker(getActivity());
 
 
-                    showDialogForSearchByName();
+                showDialogForSearchByName();
 
 
             }
         });
+
+        btn_searchby_nextjamat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gps = new GPSTracker(getActivity());
+
+
+                if (gps.canGetLocation()) {
+                    Intent intent = new Intent(getActivity(), NamajiSearchResultForNextjamat.class);
+
+                    intent.putExtra(KEY_LAT, String.valueOf(gps.getLatitude()));
+                    intent.putExtra(KEY_LNG, String.valueOf(gps.getLongitude()));
+
+                    startActivity(intent);
+
+                } else {
+                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(), getResources().getString(R.string.alertGps), getResources().getString(R.string.alertMessageGps), false);
+                }
+
+
+            }
+        });
+
 
     }
 
@@ -124,6 +148,7 @@ public class NamajiSearch extends Fragment {
 
         btn_neaby_mosque = (Button) getActivity().findViewById(R.id.btn_nearby_mosque);
         btn_searchby_name = (Button) getActivity().findViewById(R.id.btn_find_by_name);
+        btn_searchby_nextjamat = (Button) getActivity().findViewById(R.id.btn_next_jamat);
 
     }
 
@@ -132,6 +157,7 @@ public class NamajiSearch extends Fragment {
         final String lat = String.valueOf(gps.getLatitude());
         final String lng = String.valueOf(gps.getLongitude());
         final String[] range = new String[1];
+        range[0] = AppConstant.defaultRange;
 
         final Dialog dialog_start = new Dialog(getActivity(),
                 android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
@@ -149,7 +175,9 @@ public class NamajiSearch extends Fragment {
         mosqueType_sp.setAdapter(dataAdapter);
 
         SeekBar rangeBar = (SeekBar) dialog_start.findViewById(R.id.dialog_seekbar);
+        rangeBar.setMax(Integer.parseInt(AppConstant.defaultMaxRange));
         final TextView seekbar_text = (TextView) dialog_start.findViewById(R.id.dialog_seekbar_text);
+        seekbar_text.setText(AppConstant.defaultRange  + " km");
 
 
         LinearLayout btn_submit = (LinearLayout) dialog_start.findViewById(R.id.dialog_btn_submit);
@@ -182,7 +210,7 @@ public class NamajiSearch extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                //range[0] = String.valueOf(seekBar.getProgress());
             }
 
             @Override
@@ -198,7 +226,7 @@ public class NamajiSearch extends Fragment {
                 Intent intent = new Intent(getActivity(), NamajiSearchResult.class);
 
                 intent.putExtra(KEY_SEARCH_TYPE, BY_DISTANCE);
-
+                intent.putExtra(KEY_MOSQUE_TYPE, mosque_type[0].toLowerCase());
                 intent.putExtra(KEY_LAT, lat);
                 intent.putExtra(KEY_LNG, lng);
                 intent.putExtra(KEY_RANGE, range[0]);
@@ -236,21 +264,18 @@ public class NamajiSearch extends Fragment {
 
                     intent.putExtra(KEY_SEARCH_TYPE, BY_NAME);
                     intent.putExtra(KEY_MOSQUE_NAME, mosque_name);
-                    if(gps.canGetLocation())
-                    {
+                    if (gps.canGetLocation()) {
                         intent.putExtra(KEY_LAT, String.valueOf(gps.getLatitude()));
                         intent.putExtra(KEY_LNG, String.valueOf(gps.getLongitude()));
-                    }else
-                    {
+                    } else {
                         intent.putExtra(KEY_LAT, "0");
                         intent.putExtra(KEY_LNG, "0");
                     }
 
 
                     startActivity(intent);
-                }else
-                {
-                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(),getResources().getString(R.string.alertTitleInterner),getResources().getString(R.string.alertMessageInternet),false);
+                } else {
+                    AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(), getResources().getString(R.string.alertTitleInterner), getResources().getString(R.string.alertMessageInternet), false);
                 }
 
 
