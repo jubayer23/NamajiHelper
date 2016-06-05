@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NamajiHelper</string>
+    <string name="app_name">Namaji</string>
     <string name="login_activity">NamajiHelper</string>
     <string name="mosque_register_activity">Mosque Register</string>
     <string name="namaji_register_activity">Namaji Register</string>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.creative.namajihelper.NamajiSearchResult;
 import com.creative.namajihelper.R;
@@ -37,6 +38,8 @@ public class NamajiFavMosque extends Fragment {
     GPSTracker gps;
 
     FavListAdapter favListAdapter;
+
+    private TextView tv_info;
 
     public static NamajiFavMosque newInstance(int page) {
         Bundle args = new Bundle();
@@ -85,6 +88,9 @@ public class NamajiFavMosque extends Fragment {
 
         listView = (ListView) getActivity().findViewById(R.id.list_fav);
 
+        tv_info = (TextView)getActivity().findViewById(R.id.tv_info);
+        tv_info.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -92,6 +98,13 @@ public class NamajiFavMosque extends Fragment {
         super.onResume();
         gps = new GPSTracker(getActivity());
         favMosqueList = AppController.getInstance().getPrefManger().getFavPlaces();
+
+
+        if(favMosqueList.size() == 0){
+            tv_info.setVisibility(View.VISIBLE);
+        }else{
+            tv_info.setVisibility(View.GONE);
+        }
 
         if (gps.canGetLocation()) {
             favListAdapter = new FavListAdapter(getActivity(), favMosqueList, gps.getLatitude(), gps.getLongitude());
